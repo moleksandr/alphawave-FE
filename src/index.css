@@ -142,7 +142,7 @@ code {
 
 .ce-my-message-bubble {
   display: inline-flex;
-  height: 40px;
+  min-height: 40px;
   padding: 10px 19px;
   justify-content: flex-end;
   align-items: center;

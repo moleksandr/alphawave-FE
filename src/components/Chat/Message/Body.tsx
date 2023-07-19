@@ -6,7 +6,7 @@ const Body = (props: any) => {
     text = text.replaceAll("<a ", `<a style="color: ${ props.isMyMessage ? 'white' : '#1890ff' };" `)
 
     return (
-        <div className={`ce_message text-[18px] font-light ${props.isMyMessage ? 'ce-my-message-bubble text-white' : ''}`} dangerouslySetInnerHTML={{ __html: text }} />
+        <div className={`ce_message max-w-[70%] ${props.isMyMessage ? '' : 'text-[18px]'} font-light break-all ${props.isMyMessage ? 'ce-my-message-bubble text-white' : ''}`} dangerouslySetInnerHTML={{ __html: text }} />
     )
 }
 

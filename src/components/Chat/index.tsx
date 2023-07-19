@@ -27,6 +27,7 @@ export const Chat = () => {
         renderMessageBubble={(creds: any, chat: any, lastMessage: any, message: any, nextMessage: any) => <Message creds={creds} chat={chat} lastMessage={lastMessage} message={message} nextMessage={nextMessage} />}
         renderNewMessageForm={ChatInput}
         renderChatSettings={() => {}}
+        renderIsTyping={(typers: any) => {console.log(typers)}}
       />
     </div>
   );

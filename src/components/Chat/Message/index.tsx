@@ -3,6 +3,7 @@ import React from 'react';
 import Body from './Body'
 
 import { Avatar } from '../../Avatar';
+import moment from "moment";
 
 const Message = (props: any) => {
     const senderAvatarUrl = props.sending ? null : props.message.sender.avatar
@@ -16,13 +17,17 @@ const Message = (props: any) => {
         isNewTurn = !props.chat.last_message.sender || props.chat.last_message.sender.username !== senderUsername
     }
     const isMyMessage = props.chat?.admin?.username === props.message?.sender_username;
+    const sentAt = moment(props.message?.created).format('h:mmA');
 
     return (
       <>
         <div className={`flex w-full ${(isNewTurn && isTurnEnd) ? 'min-h-[54px]' : 'min-h-0'} py-1 px-4`}>
           {
             isNewTurn && (
-              <Avatar className={`${isMyMessage ? 'order-2' : ''}`} avatarUrl={senderAvatarUrl} username={senderUsername} size={45} />
+              <div className={`${isMyMessage ? 'order-2' : ''}`}>
+                <Avatar avatarUrl={senderAvatarUrl} username={senderUsername} size={45} />
+                <p className={'text-center text-stone-300 text-[10px] font-semibold mt-1'}>{sentAt}</p>
+              </div>
             )
           }
           
@@ -34,7 +39,7 @@ const Message = (props: any) => {
             {!!props.message.text && <Body text={props.message.text} isMyMessage={isMyMessage}/>}
             <div className={`flex flex-col ${isMyMessage ? 'items-end' : 'items-start'}`}>
               {props.message?.attachments?.map((attachment: any, index: number) => (
-                <img key={`attachment${index}`} src={attachment?.file} alt={'attachment'} />
+                <img className={'my-1'} key={`attachment${index}`} src={attachment?.file} alt={'attachment'} />
               ))}
             </div>
           </div>

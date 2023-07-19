@@ -21,9 +21,7 @@ export const ChatInput = (props: any) => {
         text: message,
         attachments: images,
         sender_username: creds.userName,
-        custom_json: {
-          // TODO: add images
-        }
+        custom_json: {}
       };
 
       sendMessage(creds, activeChat, newMessageData, conn.username);
@@ -53,7 +51,7 @@ export const ChatInput = (props: any) => {
   };
 
   return (
-    <div className="absolute bottom-0 pb-[19px] pl-[26px] pr-[18px] flex w-full bg-[#FFFFFF92] pt-4">
+    <div className="absolute bottom-0 pb-[19px] pl-[26px] pr-[18px] flex w-full bg-[#FFFFFF] pt-4">
       <div className="flex -ml-1 absolute -top-[105px]">
         {images.filter((image) => image !== null).map((image, index) => (
           <div key={`attached-image${index}`} className="w-[108px] h-[108px] relative [&>button]:hover:block m-1">

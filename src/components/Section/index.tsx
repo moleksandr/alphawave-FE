@@ -9,16 +9,17 @@ import { TOOL_TYPE } from "../ToolBar/types";
 import { ToolBar } from "../ToolBar";
 import { useProjectContext } from "../../contexts/ProjectContext";
 import { Responsive, WidthProvider } from "react-grid-layout";
-
+import {StandardTable} from '../tools/tables/StandardTable'
 // Styles 
 import './index.css'
+import BarChart from "../tools/charts/BarChart";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 // Export component
 export const Section: FC<SectionProps> = (props) => {
   const { id } = props;
-  const { sections, updateSection, removeWidget } = useProjectContext();
+  const { sections, updateSection, removeWidget, removeSection } = useProjectContext();
   const sectionData = useMemo(
     () => sections.find((section) => section.id === id),
     [sections, id]
@@ -133,7 +134,19 @@ export const Section: FC<SectionProps> = (props) => {
     [sectionData, updateSection]
   );
 
+  const renderComponent = (componentType: string) => {
+    switch (componentType) {
+      case TOOL_TYPE.TABLE_STANDARD:
+        return <StandardTable />;
+      case TOOL_TYPE.CHART_BAR:
+        return <BarChart />;
+      default:
+        return <div className="flex items-center justify-center">{componentType}</div>
+    }
+  }
+
   const generateLayoutItem = () => {
+
     return layouts.lg.map((item, i) => (
       <div
         key={item.i}
@@ -145,16 +158,19 @@ export const Section: FC<SectionProps> = (props) => {
           alignItems: "center",
         }}
       >
+        {renderComponent(item.type)}
         <button className='absolute right-4 top-4 rounded-full text-2xl text-white bg-green-900 w-8 h-8' onClick={() => removeWidget(id, item.i )}>×</button>
-        {item.type}
+        
       </div>
     ));
   };
 
+
   return (
     // <DndProvider backend={HTML5Backend}>
-      <div className="container py-[11px]  px-[100px] relative">
-        <div className="w-full  py-2 bg-gradient-to-r from-cyan-600 to-slate-500 justify-center items-center gap-2.5 inline-flex rounded-t-xl">
+      <div className="container py-[11px] px-[100px] relative">
+        <button className='absolute right-28  top-6 rounded-full text-2xl text-white bg-green-900 w-8 h-8' onClick={() => removeSection(id)}>×</button>
+        <div className="w-full py-2 bg-gradient-to-r from-cyan-600 to-slate-500 justify-center items-center gap-2.5 inline-flex rounded-t-xl">
           <div className="text-center  text-4xl font-bold">
             {" "}
             {isEditing ? (
@@ -202,7 +218,7 @@ export const Section: FC<SectionProps> = (props) => {
             </div>
           </div>
 
-          <ToolBar />
+          
         </div>
       </div>
     // </DndProvider>

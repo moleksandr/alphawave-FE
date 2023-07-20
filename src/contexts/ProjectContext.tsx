@@ -24,6 +24,7 @@ interface ProjectContextProps {
   updateSection: (section: Section) => void;
   addWidget: (sectionId: string, type: string) => void;
   removeWidget: (sectionId: string, widgetId: string) => void;
+  removeSection: (sectionId: string) => void
 }
 
 const initialValues = {
@@ -36,7 +37,7 @@ const initialValues = {
   updateSection: () => {},
   addWidget: () => {},
   removeWidget: () => {},
-
+  removeSection: () => {}
 }
 
 const ProjectContext = createContext<ProjectContextProps>(initialValues);
@@ -84,6 +85,11 @@ export const ProjectProvider: FC<any> = ({ children }) => {
     }) : section))
   };
   
+
+  const removeSection = (sectionId: string) => {
+    setSections(sections.filter(section => section.id !== sectionId))
+  };
+  
  
   
   const value = {
@@ -92,6 +98,7 @@ export const ProjectProvider: FC<any> = ({ children }) => {
     updateSection,
     addWidget,
     removeWidget,
+    removeSection,
  
   }
 

@@ -16,6 +16,10 @@ import { TaskProvider } from './contexts/TaskContext';
 import { AppProvider } from './contexts/AppContext';
 import { ChatProvider } from './contexts/ChatContext';
 import { ProjectProvider } from './contexts/ProjectContext';
+import { registerLicense } from '@syncfusion/ej2-base';
+
+// Registering Syncfusion license key
+registerLicense(process.env.REACT_APP_SYNCFUSION_LICENSE_KEY || '');
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

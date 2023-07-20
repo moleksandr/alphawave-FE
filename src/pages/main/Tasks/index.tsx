@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { Droppable, Draggable, DragDropContext, DropResult } from 'react-beautiful-dnd';
 
 // Components
-import { MainLayout } from '../../components/layouts/MainLayout';
+import { MainLayout } from '../../../components/layouts/MainLayout';
 
 // Contexts
-import { TASK, useTaskContext } from '../../contexts/TaskContext';
+import { TASK, useTaskContext } from '../../../contexts/TaskContext';
 
 
 // Export page

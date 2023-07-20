@@ -2,12 +2,12 @@
 import React from 'react';
 
 // Components
-import { Button } from '../../components/common/Button';
-import { MainLayout } from '../../components/layouts/MainLayout';
-import { Carousel } from '../../components/common/Carousel';
+import { Button } from '../../../components/common/Button';
+import { MainLayout } from '../../../components/layouts/MainLayout';
+import { Carousel } from '../../../components/common/Carousel';
 
 // Types
-import { BUTTON_VARIANTS } from '../../components/common/Button/types';
+import { BUTTON_VARIANTS } from '../../../components/common/Button/types';
 
 
 // Export page

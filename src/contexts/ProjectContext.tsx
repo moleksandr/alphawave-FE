@@ -1,41 +1,42 @@
 // Dependencies
-import React, { useState, createContext, useContext, FC, Dispatch, SetStateAction } from 'react';
+import React, { useState, createContext, useContext, FC } from 'react';
 import { v4 as uuidv4 } from "uuid";
 
-// Types
-import { TOOL_TYPE } from '../components/ToolBar/types';
-type Area = {
-  id: string;
+type Widget = {
+  i: string
+  x: number
+  y: number
+  w: number
+  h: number
   order: number;
-  componentTypes: TOOL_TYPE[];
+  type: string;
 }
 
 type Section = {
   id: string;
   title: string;
-  areas: Area[];
+  widgets: Widget[];
 }
 
 interface ProjectContextProps {
   sections: Section[];
   addSection: () => void;
   updateSection: (section: Section) => void;
-  addArea: (sectionId: string, dir: 'left' | 'right') => void;
-  removeArea: (sectionId: string, areaId: string) => void;
-  addComponent: (sectionId: string, areaId: string, type: TOOL_TYPE) => void;
+  addWidget: (sectionId: string, type: string) => void;
+  removeWidget: (sectionId: string, widgetId: string) => void;
 }
 
 const initialValues = {
   sections: [{
     id: uuidv4(),
     title: 'New Section',
-    areas: []
+    widgets: []
   }],
   addSection: () => {},
   updateSection: () => {},
-  addArea: () => {},
-  removeArea: () => {},
-  addComponent: () => {},
+  addWidget: () => {},
+  removeWidget: () => {},
+
 }
 
 const ProjectContext = createContext<ProjectContextProps>(initialValues);
@@ -47,7 +48,7 @@ export const ProjectProvider: FC<any> = ({ children }) => {
     const newSection = {
       id: uuidv4(),
       title: 'New Section',
-      areas: []
+      widgets: []
     };
     
     setSections(prevSections => [...prevSections, newSection]);
@@ -57,45 +58,41 @@ export const ProjectProvider: FC<any> = ({ children }) => {
     setSections(prevSections => prevSections.map((oldSection) => oldSection.id === section.id ? section : oldSection));
   }
   
-  const addArea = (sectionId: string, dir: 'left' | 'right') => {
+  const addWidget = (sectionId: string, type: string) => {
     const section = sections.find((sec) => sec.id === sectionId);
     
-    const newArea = {
-      id: uuidv4(),
-      componentTypes: [],
-      order: (section?.areas?.length ?? 0) + 1
+    const newWidget = {
+      i: uuidv4(),
+      x: 1,
+      y: 10,
+      w: 10,
+      h: 4,
+      type: type,
+      order: (section?.widgets?.length ?? 0) + 1
     };
     
     setSections(prevSections => prevSections.map((section) => section.id === sectionId ? ({
       ...section,
-      areas: dir === 'left' ? [newArea, ...section.areas] : [...section.areas, newArea],
+      widgets: [...section?.widgets, newWidget]
+    }) : section))
+  };
+ 
+  const removeWidget = (sectionId: string, widgetI: string) => {
+    setSections(prevSections => prevSections.map(section => section.id === sectionId ? ({
+      ...section,
+      widgets: section.widgets.filter(widget => widget.i !== widgetI)
     }) : section))
   };
   
-  const removeArea = (sectionId: string, areaId: string) => {
-    setSections(prevSections => prevSections.map(section => section.id === sectionId ? ({
-      ...section,
-      areas: section.areas.filter(area => area.id !== areaId)
-    }) : section))
-  };
-  
-  const addComponent = (sectionId: string, areaId: string, componentType: TOOL_TYPE) => {
-    setSections(prevSections => prevSections.map(section => section.id === sectionId ? ({
-      ...section,
-      areas: section.areas.map((area) => area.id === areaId ? ({
-        ...area,
-        componentTypes: [...area.componentTypes, componentType]
-      }) : area)
-    }) : section))
-  };
+ 
   
   const value = {
     sections,
     addSection,
     updateSection,
-    addArea,
-    removeArea,
-    addComponent,
+    addWidget,
+    removeWidget,
+ 
   }
 
   return (

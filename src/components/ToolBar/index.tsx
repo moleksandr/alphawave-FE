@@ -12,8 +12,6 @@ import { ToolOption } from './ToolOption';
 
 // Export component
 export const ToolBar: FC<ToolBarProps> = (props) => {
-  
-  
   return (
     <div className="absolute flex flex-col items-center left-0 top-1/2 w-[90px] z-10 card-shadow py-1 transform transform-gpu -translate-y-2/4">
       <div className="absolute bg-white opacity-90 w-full h-full left-0 top-0 rounded-[10px]" />

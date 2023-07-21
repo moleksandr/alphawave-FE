@@ -16,11 +16,11 @@ export type ToolOption = {
 
 export enum TOOL_TYPE {
   TEMPLATES = 'templates',
-  SECTION_ONE = 'section-one',
-  SECTION_TWO_ONE = 'section-two-one',
-  SECTION_TWO_TWO = 'section-two-two',
-  SECTION_TWO_THREE = 'section-two-three',
-  SECTION_THREE = 'section-three',
+  // SECTION_ONE = 'section-one',
+  // SECTION_TWO_ONE = 'section-two-one',
+  // SECTION_TWO_TWO = 'section-two-two',
+  // SECTION_TWO_THREE = 'section-two-three',
+  // SECTION_THREE = 'section-three',
   TEXT_BOX = 'text-box',
   TEXT_SHORT_ANSWER = 'short-answer',
   TEXT_PARAGRAPH = 'paragraph',

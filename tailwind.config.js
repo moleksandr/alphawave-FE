@@ -22,8 +22,12 @@ module.exports = {
         secondary: "#556489",
         lightBlue: "#00C5FF",
         border: "#DBDBDB",
+        borderPrimary: "#323232",
         primaryBg: "#E3F0FF",
-        buttonPrimary: "#0070C0"
+        buttonPrimary: "#0070C0",
+        white: "#FFFFFF",
+        textColorPrimary: "#323232",
+        bgColorGreen: '#c6efce'
       },
       backgroundImage: {
         'home-back': "url('/images/general/home-back.png')",

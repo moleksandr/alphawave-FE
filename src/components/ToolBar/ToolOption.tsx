@@ -14,12 +14,11 @@ export const ToolOption: FC<ToolOptionProps> = (props) => {
   const { addWidget } = useProjectContext();
   
   const [{ isDragging }, drag] = useDrag(() => ({
-  
     type: type || TOOL_TYPE.TEMPLATES,
     item: { type},
     end: (item, monitor) => {
       const dropResult = monitor.getDropResult() as {id: string};
-      if (item && dropResult) {
+      if (item && dropResult) { 
         addWidget(dropResult.id, type || TOOL_TYPE.TEMPLATES);
       }
     },
@@ -30,7 +29,6 @@ export const ToolOption: FC<ToolOptionProps> = (props) => {
   }))
 
   const opacity = isDragging ? 0.4 : 1
-  
   return (
     <div ref={drag} className="flex flex-col items-center py-[5px] mx-1 relative z-30" style={{ opacity }}>
       <img src={icon} alt={'option icon'} />

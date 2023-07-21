@@ -1,14 +1,20 @@
 // Dependencies
 import React, { useState, createContext, useContext, FC } from 'react';
 import { v4 as uuidv4 } from "uuid";
-
+import { TOOL_TYPE } from '../components/ToolBar/types';
+// Types
 type Widget = {
+  id: string
   i: string
   x: number
   y: number
   w: number
   h: number
-  order: number;
+  minW: number,
+  minH: number,
+  maxW: number,
+  maxH: number,
+  isResizable: boolean,
   type: string;
 }
 
@@ -41,7 +47,7 @@ const initialValues = {
 }
 
 const ProjectContext = createContext<ProjectContextProps>(initialValues);
-
+// Export Component
 export const ProjectProvider: FC<any> = ({ children }) => {
   const [sections, setSections] = useState<Section[]>(initialValues.sections);
   
@@ -60,24 +66,56 @@ export const ProjectProvider: FC<any> = ({ children }) => {
   }
   
   const addWidget = (sectionId: string, type: string) => {
-    const section = sections.find((sec) => sec.id === sectionId);
-    
-    const newWidget = {
-      i: uuidv4(),
-      x: 1,
-      y: 10,
-      w: 10,
-      h: 4,
-      type: type,
-      order: (section?.widgets?.length ?? 0) + 1
-    };
-    
-    setSections(prevSections => prevSections.map((section) => section.id === sectionId ? ({
-      ...section,
-      widgets: [...section?.widgets, newWidget]
-    }) : section))
+    setSections((prevSections) =>
+    prevSections.map((section) => {
+      if (section.id === sectionId) {
+        const maxRow = section?.widgets?.length !== 0 ? section?.widgets[section?.widgets.length - 1].y : 0;
+      
+        const newWidget = {
+          id: uuidv4(),
+          i: uuidv4(),
+          x: 1,
+          y: maxRow,
+          w: 13,
+          h: 7,
+          minW: 5,
+          minH: 5,
+          maxH: 10,
+          maxW: 300,
+          isResizable: true,
+          type: type,
+        };
+
+        switch (type) {
+          case TOOL_TYPE.CHART_BAR:
+            newWidget.w = 100;
+            newWidget.h = 8;
+            newWidget.isResizable = false
+            break;
+          case TOOL_TYPE.CHART_LINE:
+            newWidget.w = 100;
+            newWidget.h = 11;
+            newWidget.isResizable = false
+            break;
+          case TOOL_TYPE.TABLE_STATUS:
+            newWidget.maxH = 300
+            newWidget.minW = 10
+            newWidget.h = 16
+            break
+          case TOOL_TYPE.IMAGE_SINGLE:
+            newWidget.maxH = 40
+        }
+
+        return {
+          ...section,
+          widgets: [...section.widgets, newWidget],
+        };
+      }
+      return section;
+    })
+  );
   };
- 
+
   const removeWidget = (sectionId: string, widgetI: string) => {
     setSections(prevSections => prevSections.map(section => section.id === sectionId ? ({
       ...section,
@@ -85,12 +123,9 @@ export const ProjectProvider: FC<any> = ({ children }) => {
     }) : section))
   };
   
-
   const removeSection = (sectionId: string) => {
     setSections(sections.filter(section => section.id !== sectionId))
   };
-  
- 
   
   const value = {
     sections,

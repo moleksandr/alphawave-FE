@@ -1,7 +1,9 @@
 import {FC} from 'react'
 import { AxisModel,Category,ChartComponent, ColumnSeries, Inject, Legend, LineSeries,
   SeriesCollectionDirective, SeriesDirective  } from '@syncfusion/ej2-react-charts';
-const BarChart: FC = () => {
+import { ChartBarProps } from './types';
+const ChartBar: FC<ChartBarProps> = (props) => {
+  const {id} = props
   const chartData: any[] = [
     { month: 'Jan', sales: 35, sales1: 28 }, { month: 'Feb', sales: 28, sales1: 35 },
     { month: 'Mar', sales: 34, sales1: 32 }, { month: 'Apr', sales: 32, sales1: 34 },
@@ -12,7 +14,7 @@ const BarChart: FC = () => {
 ];
 const primaryxAxis: AxisModel = { valueType: 'Category' };
   return (
-  <ChartComponent style={{width: '100%', height: '100%'}} id='charts' primaryXAxis={primaryxAxis} dataSource={chartData}>
+  <ChartComponent style={{width: '100%', height: '100%', position: 'absolute'}} id={`chart-bar-${id}`} primaryXAxis={primaryxAxis} dataSource={chartData}>
   <Inject services={[ColumnSeries, Legend, LineSeries, Category]} />
   <SeriesCollectionDirective>
     <SeriesDirective  xName='month' type='Column' yName='sales'  />
@@ -22,4 +24,4 @@ const primaryxAxis: AxisModel = { valueType: 'Category' };
   )
 }
 
-export default BarChart
+export default ChartBar

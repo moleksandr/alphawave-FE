@@ -1,41 +1,47 @@
 // Dependencies
 import React, { FC, useCallback, useMemo, useState, useEffect } from "react";
-import {  useDrop } from "react-dnd";
+import { useDrop } from "react-dnd";
 
 // Types
 import { SectionProps } from "./types";
 import { TOOL_TYPE } from "../ToolBar/types";
 // Components
-import { ToolBar } from "../ToolBar";
 import { useProjectContext } from "../../contexts/ProjectContext";
 import { Responsive, WidthProvider } from "react-grid-layout";
-import {StandardTable} from '../tools/tables/StandardTable'
-// Styles 
-import './index.css'
-import BarChart from "../tools/charts/BarChart";
-
-const ResponsiveReactGridLayout = WidthProvider(Responsive);
+import { StandardTable } from "../tools/tables/StandardTable";
+// Styles
+import "./index.css";
+import ChartBar from "../tools/charts/ChartBar";
+import ChartLine from "../tools/charts/ChartLine";
+import StatusTable from "../tools/tables/StatusTable";
+import SingleImage from "../tools/images/SingleImage";
+import CarouselImage from "../tools/images/CarouselImage";
 
 // Export component
 export const Section: FC<SectionProps> = (props) => {
+  // init ResponsiveReactGridLayout
+  const ResponsiveReactGridLayout = useMemo(() => WidthProvider(Responsive), []);
+
   const { id } = props;
+
   const { sections, updateSection, removeWidget, removeSection } = useProjectContext();
+ 
+  const [isEditing, setIsEditing] = useState(false);
+
+  const [mounted, setMounted] = useState(false);
+
+   
+
   const sectionData = useMemo(
     () => sections.find((section) => section.id === id),
     [sections, id]
   );
 
-  const [isEditing, setIsEditing] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  const [layouts, setLayouts] = useState({ lg: sectionData?.widgets || [] });
-
-  useEffect(() => {
-    setLayouts({ lg: sectionData?.widgets || [] });
-  }, [sectionData?.widgets]);
+  const [layout, setLayout] = useState({lg: sectionData?.widgets || []})  
 
   useEffect(() => {
     setMounted(true);
+    setLayout({lg: sectionData?.widgets || []})
   }, [sectionData?.widgets]);
 
   const handleDoubleClick = () => {
@@ -55,11 +61,11 @@ export const Section: FC<SectionProps> = (props) => {
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: [
       TOOL_TYPE.TEMPLATES,
-      TOOL_TYPE.SECTION_ONE,
-      TOOL_TYPE.SECTION_TWO_ONE,
-      TOOL_TYPE.SECTION_TWO_TWO,
-      TOOL_TYPE.SECTION_TWO_THREE,
-      TOOL_TYPE.SECTION_THREE,
+      // TOOL_TYPE.SECTION_ONE,
+      // TOOL_TYPE.SECTION_TWO_ONE,
+      // TOOL_TYPE.SECTION_TWO_TWO,
+      // TOOL_TYPE.SECTION_TWO_THREE,
+      // TOOL_TYPE.SECTION_THREE,
       TOOL_TYPE.TEXT_BOX,
       TOOL_TYPE.TEXT_SHORT_ANSWER,
       TOOL_TYPE.TEXT_PARAGRAPH,
@@ -96,7 +102,6 @@ export const Section: FC<SectionProps> = (props) => {
 
   const isActive = canDrop && isOver;
   let backgroundColor = "#d3f5e1";
-
   if (isActive) {
     backgroundColor = "#d3f5e1";
   } else if (canDrop) {
@@ -115,112 +120,113 @@ export const Section: FC<SectionProps> = (props) => {
     [sectionData, updateSection]
   );
 
-  const onLayoutChange = useCallback(
-    (layout: any) => {
-      if (sectionData) {
-        const updatedWidgets = sectionData.widgets.map((widget) => {
-          const updatedLayout = layout.find((item: any) => item.i === widget.i);
-          if (updatedLayout) {
-            return { ...widget, ...updatedLayout };
-          }
-          return widget;
-        });
-        updateSection({
-          ...sectionData,
-          widgets: updatedWidgets,
-        });
-      }
-    },
-    [sectionData, updateSection]
-  );
-
-  const renderComponent = (componentType: string) => {
+  const renderComponent = (componentType: string, id: string) => {
     switch (componentType) {
       case TOOL_TYPE.TABLE_STANDARD:
         return <StandardTable />;
+      case TOOL_TYPE.TABLE_STATUS:
+        return <StatusTable />;
       case TOOL_TYPE.CHART_BAR:
-        return <BarChart />;
+        return <ChartBar id={id} />;
+      case TOOL_TYPE.CHART_LINE:
+        return <ChartLine id={id} />;
+      case TOOL_TYPE.IMAGE_SINGLE:
+        return <SingleImage />
       default:
-        return <div className="flex items-center justify-center">{componentType}</div>
+        return (
+          <div className="flex items-center justify-center">
+            {componentType}
+          </div>
+        );
     }
-  }
+  };
 
   const generateLayoutItem = () => {
-
-    return layouts.lg.map((item, i) => (
-      <div
-        key={item.i}
-        style={{
-          background: "#fff",
-          textAlign: "center",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        {renderComponent(item.type)}
-        <button className='absolute right-4 top-4 rounded-full text-2xl text-white bg-green-900 w-8 h-8' onClick={() => removeWidget(id, item.i )}>×</button>
-        
+    return layout?.lg.map((item) => (
+      <div key={item.i} className="bg-white rounded-2xl pb-8 pl-8 pr-8 pt-8">
+        {renderComponent(item.type, item.id)}
+        <button className="absolute right-1 top-1 rounded-full text-xl text-white bg-green-900 w-7 h-7" onClick={() => removeWidget(id, item.i)}>
+          ×
+        </button>
       </div>
     ));
   };
 
+  const handleLayoutChange = (layout: any, layouts: any) => {
+    if (sectionData) {
+      const widgets = layouts.lg.map((item: any) => {
+        const existingItem = sectionData?.widgets.find((d) => d.i === item.i);
+        return { ...existingItem, x: item.x, y: item.y, w: item.w, h: item.h };
+      });
+      updateSection({
+        ...sectionData,
+        widgets: widgets,
+      });
+    }
+
+  };
 
   return (
-    // <DndProvider backend={HTML5Backend}>
-      <div className="container py-[11px] px-[100px] relative">
-        <button className='absolute right-28  top-6 rounded-full text-2xl text-white bg-green-900 w-8 h-8' onClick={() => removeSection(id)}>×</button>
-        <div className="w-full py-2 bg-gradient-to-r from-cyan-600 to-slate-500 justify-center items-center gap-2.5 inline-flex rounded-t-xl">
-          <div className="text-center  text-4xl font-bold">
-            {" "}
-            {isEditing ? (
-              <input
-                type="text"
-                className="text-center outline-none"
-                value={sectionData?.title}
-                onChange={(e) => handleChange(e)}
-                onBlur={() => handleBlur()}
-                onKeyDown={(e) => handleKeyDown(e)}
-                autoFocus
-              />
+    <div className="container py-[11px] px-[100px] relative">
+      <button
+        className="absolute right-28  top-6 rounded-full text-2xl text-white bg-green-900 w-8 h-8"
+        onClick={() => removeSection(id)}
+      >
+        ×
+      </button>
+      <div className="w-full py-2 bg-gradient-to-r from-cyan-600 to-slate-500 justify-center items-center gap-2.5 inline-flex rounded-t-xl">
+        <div className="text-center  text-4xl font-bold">
+          {isEditing ? (
+            <input
+              type="text"
+              className="text-center outline-none"
+              value={sectionData?.title}
+              onChange={(e) => handleChange(e)}
+              onBlur={() => handleBlur()}
+              onKeyDown={(e) => handleKeyDown(e)}
+              autoFocus
+            />
+          ) : (
+            <h2
+              onDoubleClick={() => handleDoubleClick()}
+              className="text-white"
+            >
+              {sectionData?.title}
+            </h2>
+          )}
+        </div>
+      </div>
+      <div className="w-full h-full flex bg-white p-4 rounded-b-xl">
+        <div className="bg-green-500 min-w-full bg-opacity-10 border-[3px] border-dashed border-green-500 rounded-lg relative">
+          <div
+            className="w-full h-full flex flex-row p-8 gap-4"
+            ref={drop}
+            style={{ background: backgroundColor }}
+          >
+            {!sectionData?.widgets?.length ? (
+              <p className="text-center text-white text-5xl font-medium m-auto">
+                Add Items Here
+              </p>
             ) : (
-              <h2
-                onDoubleClick={() => handleDoubleClick()}
-                className="text-white"
+              <ResponsiveReactGridLayout
+                className="widget-container"
+                style={{ width: "100%", position: "relative"}}
+                rowHeight={30}
+                cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+                layouts={layout}
+                onLayoutChange={handleLayoutChange}
+                useCSSTransforms={mounted}
+                measureBeforeMount={false}
+                compactType={"vertical"}
+                isBounded={false}
+               
               >
-                {sectionData?.title}
-              </h2>
+                {generateLayoutItem()}
+              </ResponsiveReactGridLayout>
             )}
           </div>
         </div>
-        <div className="w-full flex bg-white p-4 rounded-b-xl">
-          <div className="bg-green-500 min-w-full bg-opacity-10 border-[3px] border-dashed border-green-500 rounded-lg relative">
-            <div className="w-full h-full flex flex-row p-10 gap-4" ref={drop} style={{background: backgroundColor}}>
-              {!sectionData?.widgets?.length ? (
-                <p className="text-center text-white text-5xl font-medium m-auto">
-                  Add Items Here
-                </p>
-              ) : (
-                <ResponsiveReactGridLayout
-                  className="widget-container"
-                  style={{width: "100%"}}
-                  rowHeight={30}
-                  cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
-                  layouts={layouts}
-                  onLayoutChange={onLayoutChange}
-                  useCSSTransforms={mounted}
-                  measureBeforeMount={false}
-                  // isDroppable={true}
-                >
-                  {generateLayoutItem()}
-                </ResponsiveReactGridLayout>
-              )}
-            </div>
-          </div>
-
-          
-        </div>
       </div>
-    // </DndProvider>
+    </div>
   );
 };

@@ -31,7 +31,7 @@ const ChatList = (props: any) => {
                 return (
                     <ChatLink
                         key={`chat-${index}`}
-                        title={chat.title}
+                        title={chat.title + `(+${chat?.people?.length ?? 0})`}
                         bold={!hasReadLastMessage(chat)}
                         onClick={() => setActiveChat(chat.id)}
                         onUpdateTitle={(title: string) => onUpdateChannel(title, chat.id)}
@@ -52,7 +52,7 @@ const ChatList = (props: any) => {
                 return (
                   <ChatLink
                     key={`chat-${index}`}
-                    title={chat.title.replace(GROUP_CHAT_PREFIX, '')}
+                    title={chat.title.replace(GROUP_CHAT_PREFIX, '') + `(+${chat?.people?.length ?? 0})`}
                     bold={!hasReadLastMessage(chat)}
                     onClick={() => setActiveChat(chat.id)}
                     onUpdateTitle={(title: string) => onUpdateChannel(GROUP_CHAT_PREFIX + title, chat.id)}

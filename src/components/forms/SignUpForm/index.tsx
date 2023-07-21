@@ -41,7 +41,7 @@ export const SignUpForm = () => {
   
   return (
     <div className={'flex rounded-[25px] overflow-hidden border-[5px] border-[#00C5FF] mx-4'}>
-      <img className={'max-w-[546px] min-w-[450px] min-h-[750px] h-full object-cover md:block hidden'} src={'/images/general/sign-up-bg.png'} alt={'sign up bg'} />
+      <img className={'max-w-[546px] min-w-[450px] min-h-[750px] h-auto object-cover md:block hidden'} src={'/images/general/sign-up-bg.png'} alt={'sign up bg'} />
       <div className="max-w-[680px] min-h-[750px] w-screen bg-white py-9">
         <img className={'max-w-[380px] w-full mx-auto sm:block hidden'} src={'/images/logos/full-logo.png'} alt={'full-logo'} />
         <img className={'mx-auto sm:hidden block w-32'} src={'/images/logos/Logo-01.svg'} alt={'full-logo'} />
@@ -54,6 +54,7 @@ export const SignUpForm = () => {
               label={'First Name'}
               value={values.firstName}
               onChange={handleChange}
+              showError={touched.firstName && errors.firstName}
               error={errors.firstName}
             />
             <TextInput
@@ -62,6 +63,7 @@ export const SignUpForm = () => {
               label={'Last Name'}
               value={values.lastName}
               onChange={handleChange}
+              showError={touched.lastName && errors.lastName}
               error={errors.lastName}
             />
           </div>
@@ -71,6 +73,7 @@ export const SignUpForm = () => {
             label={'Email'}
             value={values.email}
             onChange={handleChange}
+            showError={touched.email && errors.email}
             error={errors.email}
           />
           <TextInput
@@ -79,6 +82,7 @@ export const SignUpForm = () => {
             label={'Job Title'}
             value={values.jobTitle}
             onChange={handleChange}
+            showError={touched.jobTitle && errors.jobTitle}
             error={errors.jobTitle}
           />
           <div className={'w-full flex md:flex-row flex-col'}>
@@ -88,6 +92,7 @@ export const SignUpForm = () => {
               label={'Password'}
               value={values.password}
               onChange={handleChange}
+              showError={touched.password && errors.password}
               error={errors.password}
               type={'password'}
             />
@@ -97,11 +102,12 @@ export const SignUpForm = () => {
               label={'Confirm Password'}
               value={values.confirmPassword}
               onChange={handleChange}
+              showError={touched.confirmPassword && errors.confirmPassword}
               error={errors.confirmPassword}
               type={'password'}
             />
           </div>
-          <button className="block max-w-[282px] h-[49px] w-full bg-[#00C5FF] rounded-[30px] text-[20px] font-bold text-white mt-5 mb-[19px] mx-auto">Create Account</button>
+          <button onClick={() => handleSubmit()} className="block max-w-[282px] h-[49px] w-full bg-[#00C5FF] rounded-[30px] text-[20px] font-bold text-white mt-5 mb-[19px] mx-auto">Create Account</button>
         </div>
       </div>
     </div>

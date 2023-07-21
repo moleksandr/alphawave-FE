@@ -54,6 +54,7 @@ export const LoginForm = () => {
           variant={TEXT_INPUT_VARIANT.CONTAINED}
           value={values.username}
           onChange={handleChange}
+          showError={touched.username && errors.username}
           error={errors.username}
         />
         <TextInput
@@ -68,6 +69,7 @@ export const LoginForm = () => {
           variant={TEXT_INPUT_VARIANT.CONTAINED}
           value={values.password}
           onChange={handleChange}
+          showError={touched.password && errors.password}
           error={errors.password}
           type={'password'}
         />

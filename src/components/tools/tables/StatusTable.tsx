@@ -3,7 +3,7 @@ import {FC} from 'react'
 const StatusTable: FC = () => {
   return (
     <table className='border-[1px] border-solid border-borderPrimary block rounded-xl mt-4 ml-4 mr-4 mb-4'>
-      <thead className='bg-lightBlue block float-left w-70'>
+      <thead className='bg-lightBlue block float-left w-70 rounded-s-lg'>
         <tr className='text-white'>
           <th className='block leading-9 pl-4 pr-4 text-2xl font-semibold'>M1</th>
           <th className='block leading-9 pl-4 pr-4 text-2xl font-semibold'>M1</th>

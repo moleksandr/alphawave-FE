@@ -1,21 +1,21 @@
 // Dependencies
 import React, { FC, useCallback, useMemo, useState, useEffect } from "react";
 import { useDrop } from "react-dnd";
-
+import { Responsive, WidthProvider } from "react-grid-layout";
 // Types
 import { SectionProps } from "./types";
 import { TOOL_TYPE } from "../ToolBar/types";
 // Components
 import { useProjectContext } from "../../contexts/ProjectContext";
-import { Responsive, WidthProvider } from "react-grid-layout";
 import { StandardTable } from "../tools/tables/StandardTable";
+import YoutubeVideo from '../tools/video/YoutubeVideo'
 // Styles
 import "./index.css";
 import ChartBar from "../tools/charts/ChartBar";
 import ChartLine from "../tools/charts/ChartLine";
 import StatusTable from "../tools/tables/StatusTable";
 import SingleImage from "../tools/images/SingleImage";
-import CarouselImage from "../tools/images/CarouselImage";
+
 
 // Export component
 export const Section: FC<SectionProps> = (props) => {
@@ -132,6 +132,8 @@ export const Section: FC<SectionProps> = (props) => {
         return <ChartLine id={id} />;
       case TOOL_TYPE.IMAGE_SINGLE:
         return <SingleImage />
+      case TOOL_TYPE.VIDEO_YOUTUBE:
+        return <YoutubeVideo />
       default:
         return (
           <div className="flex items-center justify-center">

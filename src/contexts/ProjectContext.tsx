@@ -104,7 +104,12 @@ export const ProjectProvider: FC<any> = ({ children }) => {
             break
           case TOOL_TYPE.IMAGE_SINGLE:
             newWidget.maxH = 40
-        }
+            break
+          case TOOL_TYPE.VIDEO_YOUTUBE:
+            newWidget.h = 20
+            
+            newWidget.maxH = 25
+            }
 
         return {
           ...section,

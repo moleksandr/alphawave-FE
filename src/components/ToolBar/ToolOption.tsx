@@ -11,16 +11,15 @@ import { useProjectContext } from '../../contexts/ProjectContext';
 // Export component
 export const ToolOption: FC<ToolOptionProps> = (props) => {
   const { icon, type, label } = props;
-  const { addWidget } = useProjectContext();
+  const { addComponent } = useProjectContext();
   
   const [{ isDragging }, drag] = useDrag(() => ({
-  
     type: type || TOOL_TYPE.TEMPLATES,
-    item: { type},
+    item: { type, name: label },
     end: (item, monitor) => {
-      const dropResult = monitor.getDropResult() as {id: string};
+      const dropResult = monitor.getDropResult() as { sectionId: string, areaId: string };
       if (item && dropResult) {
-        addWidget(dropResult.id, type || TOOL_TYPE.TEMPLATES);
+        addComponent(dropResult.sectionId, dropResult.areaId, item.type ?? TOOL_TYPE.TEMPLATES);
       }
     },
     collect: (monitor) => ({
@@ -28,7 +27,6 @@ export const ToolOption: FC<ToolOptionProps> = (props) => {
       handlerId: monitor.getHandlerId(),
     }),
   }))
-
   const opacity = isDragging ? 0.4 : 1
   
   return (

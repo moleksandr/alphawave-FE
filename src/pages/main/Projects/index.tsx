@@ -1,10 +1,12 @@
 // Dependencies
-import React, { useState } from 'react';
+import React from 'react';
 
 // Components
-import { MainLayout } from '../../components/layouts/MainLayout';
-import { Section } from '../../components/Section';
-import {useProjectContext} from "../../contexts/ProjectContext";
+import { MainLayout } from '../../../components/layouts/MainLayout';
+import { Section } from '../../../components/Section';
+
+// Contexts
+import { useProjectContext } from '../../../contexts/ProjectContext';
 
 // Export page
 const ProjectsPage = () => {

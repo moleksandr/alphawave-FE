@@ -20,15 +20,15 @@ export const SignUpForm = () => {
   
   const handleSignUp = async () => {
     console.log(values)
-    await axios.post(`${server}/api/auth/register`, values).then((response) => {
-      alert("Account created successfully.")
-    }).catch((error: AxiosError) => {
-      if (error.response?.statusText == 'Conflict') {
-        alert("Account already exist")
-      } else if (error.response?.statusText == 'Unprocessable Entity') {
-        alert("Input Error")
-      }
-    })
+    // await axios.post(`${server}/api/auth/register`, values).then((response) => {
+    //   alert("Account created successfully.")
+    // }).catch((error: AxiosError) => {
+    //   if (error.response?.statusText == 'Conflict') {
+    //     alert("Account already exist")
+    //   } else if (error.response?.statusText == 'Unprocessable Entity') {
+    //     alert("Input Error")
+    //   }
+    // })
     // if (response.data.status == 'success') {
     //   alert("User created successfully.")
     // }

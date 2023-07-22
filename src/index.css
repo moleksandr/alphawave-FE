@@ -152,7 +152,7 @@ code {
 
 .ce-my-message-bubble {
   display: inline-flex;
-  height: 40px;
+  min-height: 40px;
   padding: 10px 19px;
   justify-content: flex-end;
   align-items: center;
@@ -160,4 +160,3 @@ code {
   border-radius: 8px !important;
   background: linear-gradient(139deg, #0E45B5 0.33%, #66D6F9 100%);
 }
-

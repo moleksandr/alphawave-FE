@@ -15,7 +15,7 @@ export const ToolOption: FC<ToolOptionProps> = (props) => {
   
   const [{ isDragging }, drag] = useDrag(() => ({
     type: type || TOOL_TYPE.TEMPLATES,
-    item: { type},
+    item: { type, name: label },
     end: (item, monitor) => {
       const dropResult = monitor.getDropResult() as {id: string};
       if (item && dropResult) { 
@@ -27,7 +27,6 @@ export const ToolOption: FC<ToolOptionProps> = (props) => {
       handlerId: monitor.getHandlerId(),
     }),
   }))
-
   const opacity = isDragging ? 0.4 : 1
   return (
     <div ref={drag} className="flex flex-col items-center py-[5px] mx-1 relative z-30" style={{ opacity }}>

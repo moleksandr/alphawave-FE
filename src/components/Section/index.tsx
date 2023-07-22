@@ -3,7 +3,7 @@ import React, { FC, useCallback, useMemo, useState, useEffect } from "react";
 import { useDrop } from "react-dnd";
 import { Responsive, WidthProvider } from "react-grid-layout";
 // Types
-import { SectionProps } from "./types";
+import { SectionProps } from './types';
 import { TOOL_TYPE } from "../ToolBar/types";
 // Components
 import { useProjectContext } from "../../contexts/ProjectContext";
@@ -47,13 +47,13 @@ export const Section: FC<SectionProps> = (props) => {
   const handleDoubleClick = () => {
     setIsEditing(true);
   };
-
+  
   const handleBlur = () => {
     setIsEditing(false);
   };
-
+  
   const handleKeyDown = (event: any) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       setIsEditing(false);
     }
   };

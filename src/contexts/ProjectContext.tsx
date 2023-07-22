@@ -1,5 +1,5 @@
 // Dependencies
-import React, { useState, createContext, useContext, FC } from 'react';
+import React, { useState, createContext, useContext, FC, Dispatch, SetStateAction } from 'react';
 import { v4 as uuidv4 } from "uuid";
 import { TOOL_TYPE } from '../components/ToolBar/types';
 // Types

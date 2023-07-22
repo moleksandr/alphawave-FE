@@ -6,32 +6,34 @@ import axios, { AxiosError } from 'axios';
 import { server } from '../../../utils/setting'
 // Components
 import { TextInput } from '../../common/TextInput';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-// Export component
+// I want to make a notification when I click the button  --- work? nope ok?
+// how to do this on script? 
+// Export component gimme a sec working now!!!!!
 export const SignUpForm = () => {
   const SignUpSchema = Yup.object().shape({
     firstName: Yup.string().required('First name is required'),
     lastName: Yup.string().required('Last name is required'),
     email: Yup.string().email().required('Email is required'),
     jobTitle: Yup.string().required('Job title is required'),
-    password: Yup.string().required('Password is required'),
-    passwordConfirm: Yup.string().required('Password is required'),
+    password: Yup.string().min(8).required('Password is required'),
+    passwordConfirm: Yup.string().min(8).required('Password is required'),
   });
   
   const handleSignUp = async () => {
     console.log(values)
-    // await axios.post(`${server}/api/auth/register`, values).then((response) => {
-    //   alert("Account created successfully.")
-    // }).catch((error: AxiosError) => {
-    //   if (error.response?.statusText == 'Conflict') {
-    //     alert("Account already exist")
-    //   } else if (error.response?.statusText == 'Unprocessable Entity') {
-    //     alert("Input Error")
-    //   }
-    // })
-    // if (response.data.status == 'success') {
-    //   alert("User created successfully.")
-    // }
+    await axios.post(`${server}/api/auth/register`, values).then((response) => {
+      toast.success("User created successfully")
+    }).catch((error: AxiosError) => {
+      console.log(error.response?.data)
+      if (error.response?.status == 409) {
+        toast.warning("Account already exist")
+      } else if (error.response?.status == 400) {
+        toast.error("Input Error")
+      }
+    })
   };
   
   const {
@@ -116,6 +118,7 @@ export const SignUpForm = () => {
             type={'password'}
           />
         </div>
+        <ToastContainer />
         <button className="block max-w-[282px] h-[49px] w-full bg-[#00C5FF] rounded-[30px] text-[20px] font-bold text-white mt-10 mb-[19px] mx-auto" onClick={handleSignUp}>Create Account</button>
       </div>
     </div>

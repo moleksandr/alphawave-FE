@@ -11,6 +11,9 @@ import { server } from '../../../utils/setting'
 // Types
 import { TEXT_INPUT_VARIANT } from '../../common/TextInput/types';
 
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 // Export component
 export const LoginForm = () => {
   const [rememberMe, setRememberMe] = useState(false);
@@ -18,7 +21,7 @@ export const LoginForm = () => {
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string().email().required('Email is required'),
-    password: Yup.string().required('Password is required'),
+    password: Yup.string().min(8).required('Password is required'),
   });
   
   const handleLogin = async () => {
@@ -26,12 +29,10 @@ export const LoginForm = () => {
       localStorage.setItem("token", response.data.access_token)
       window.location.pathname = '/home'
     }).catch((error: AxiosError) => {
-      if (error.response?.statusText == 'Conflict') {
-        alert("Account already exist")
-      } else if (error.response?.statusText == 'Unprocessable Entity') {
-        alert("Input Error")
-      } else if (error.response?.statusText == 'Bad Request') {
-        alert("Incorrect Email or Password")
+      if (error.response?.status == 422) {
+        toast.error("Input Error")
+      } else if (error.response?.status == 400) {
+        toast.warning("Incorrect Email or Password")
       }
       console.log(error)
     })
@@ -92,6 +93,7 @@ export const LoginForm = () => {
           checked={rememberMe}
           onClick={() => setRememberMe(prev => !prev)} label={'Remember me'}
         />
+        <ToastContainer />
         <button className="w-full h-[49px] bg-[#00C5FF] rounded-[30px] text-[20px] font-bold text-white mt-5 mb-[19px]" onClick={handleLogin}>Log In</button>
         <a href={'#'} className={'text-[14px] font-semibold text-[#C8C5C5]'}>Lost your password?</a>
       </div>

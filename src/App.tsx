@@ -22,7 +22,6 @@ const App = () => {
     async () => {
       const user = await currentUser(token);
       setIsLoggedIn(user)
-      console.log(user);
     },
     []
   )
@@ -30,7 +29,6 @@ const App = () => {
   useEffect(() => {
     fetch()
   }, [])
-  console.log(isLoggedIn)
   if(isLoggedIn!=null) {
     return (
       <div className="App h-screen overflow-x-hidden">

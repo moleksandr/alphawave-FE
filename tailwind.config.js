@@ -27,10 +27,16 @@ module.exports = {
         buttonPrimary: "#0070C0",
         white: "#FFFFFF",
         textColorPrimary: "#323232",
-        bgColorGreen: '#c6efce'
+        bgColorGreen: '#c6efce',
+        dark: "#323232", 
+        brandGray: "#798488",  
+        brandBlue: "#08B4EB",  
+        brandBlueDark: "#0945B8",  
       },
       backgroundImage: {
         'home-back': "url('/images/general/home-back.png')",
+        'g1': 'linear-gradient(102deg, #018EBC 0%, #7265A7 88.02%)',
+        'g2': 'linear-gradient(118deg, rgba(3,189,244,1) 0%, rgba(224,28,167,1) 100%)'
       }
     },
     fontFamily: {

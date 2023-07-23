@@ -6,7 +6,7 @@ import { MainLayout } from '../../components/layouts/MainLayout';
 import { Section } from '../../components/Section';
 import {useProjectContext} from "../../contexts/ProjectContext";
 import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import { HTML5Backend  } from 'react-dnd-html5-backend';
 import { ToolBar } from '../../components/ToolBar';
 
 // Export page
@@ -16,6 +16,7 @@ const ProjectsPage = () => {
   return (
     <MainLayout>
       <DndProvider backend={HTML5Backend}>
+        
       <ToolBar />
       {sections.map(section => (
         <Section key={section.id} id={section.id} />

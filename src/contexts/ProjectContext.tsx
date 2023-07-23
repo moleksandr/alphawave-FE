@@ -14,6 +14,7 @@ type Widget = {
   minH: number,
   maxW: number,
   maxH: number,
+  draggableHandle: string
   isResizable: boolean,
   type: string;
 }
@@ -69,7 +70,7 @@ export const ProjectProvider: FC<any> = ({ children }) => {
     setSections((prevSections) =>
     prevSections.map((section) => {
       if (section.id === sectionId) {
-        const maxRow = section?.widgets?.length !== 0 ? section?.widgets[section?.widgets.length - 1].y : 0;
+        const maxRow = section?.widgets?.length !== 0 ? section?.widgets[section?.widgets.length - 1].y + section?.widgets[section?.widgets.length - 1].h : 0;
       
         const newWidget = {
           id: uuidv4(),
@@ -83,6 +84,7 @@ export const ProjectProvider: FC<any> = ({ children }) => {
           maxH: 10,
           maxW: 300,
           isResizable: true,
+          draggableHandle: '.drag-handle',
           type: type,
         };
 
@@ -97,10 +99,21 @@ export const ProjectProvider: FC<any> = ({ children }) => {
             newWidget.h = 11;
             newWidget.isResizable = false
             break;
+          case TOOL_TYPE.TABLE_STANDARD:
+            newWidget.h = 11
+            newWidget.minH = 11
+            newWidget.maxH = 11
+            newWidget.minW = 12
+            newWidget.isResizable = false
+            break
           case TOOL_TYPE.TABLE_STATUS:
             newWidget.maxH = 300
-            newWidget.minW = 10
-            newWidget.h = 16
+            newWidget.minH = 33
+
+            newWidget.minW = 8
+            newWidget.w = 8
+            newWidget.h = 33
+            newWidget.isResizable = false
             break
           case TOOL_TYPE.IMAGE_SINGLE:
             newWidget.maxH = 40
@@ -109,6 +122,13 @@ export const ProjectProvider: FC<any> = ({ children }) => {
             newWidget.h = 20
             
             newWidget.maxH = 25
+            break
+          case TOOL_TYPE.SMART_FILE_UPLOAD:
+            newWidget.h = 11
+            newWidget.minH = 11
+            newWidget.maxH = 11
+            newWidget.minW = 12
+            newWidget.isResizable = false
             }
 
         return {

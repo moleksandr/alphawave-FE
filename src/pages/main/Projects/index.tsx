@@ -6,16 +6,9 @@ import { HTML5Backend  } from 'react-dnd-html5-backend';
 
 import { MainLayout } from '../../../components/layouts/MainLayout';
 import { Section } from '../../../components/Section';
-<<<<<<< HEAD
 import { ToolBar } from '../../../components/ToolBar';
 // Contexts
 import { useProjectContext } from '../../../contexts/ProjectContext';
-=======
-import {useProjectContext} from "../../../contexts/ProjectContext";
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import { ToolBar } from '../../../components/ToolBar';
->>>>>>> 25bd7403b1965d4facc6a1ba0270770864c33380
 
 // Export page
 const ProjectsPage = () => {
@@ -23,14 +16,6 @@ const ProjectsPage = () => {
 
   return (
     <MainLayout>
-<<<<<<< HEAD
-      <DndProvider backend={HTML5Backend}>
-      <ToolBar />
-      {sections.map(section => (
-        <Section key={section.id} id={section.id} />
-      ))}
-      </DndProvider>
-=======
 
       <DndProvider backend={HTML5Backend}>
       <ToolBar />
@@ -39,7 +24,6 @@ const ProjectsPage = () => {
       ))}
       </DndProvider>
 
->>>>>>> 25bd7403b1965d4facc6a1ba0270770864c33380
       <div className="w-full h-px border border-indigo-500 relative mt-8 mb-16">
         <button className='absolute left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%] w-40 h-9 bg-indigo-500 rounded-3xl text-white' onClick={addSection}>+ Add Section</button>
       </div>

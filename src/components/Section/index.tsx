@@ -161,7 +161,7 @@ export const Section: FC<SectionProps> = (props) => {
         {renderComponent(item.type, item.id)}
         <button
           className="absolute right-1 top-2 rounded-full text-xl text-white bg-green-900 w-[36px] h-[36px]"
-          onClick={() => removeWidget(id, item.i)}
+          onClick={() => removeWidget(id, item.id)}
         >
           ×
         </button>

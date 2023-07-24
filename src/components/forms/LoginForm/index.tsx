@@ -2,25 +2,42 @@
 import React, { useState } from 'react';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
+import axios, { AxiosError } from 'axios';
 
 // Components
 import { TextInput } from '../../common/TextInput';
 import { Checkbox } from '../../common/Checkbox';
-
+import { server } from '../../../utils/setting'
 // Types
 import { TEXT_INPUT_VARIANT } from '../../common/TextInput/types';
+
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Export component
 export const LoginForm = () => {
   const [rememberMe, setRememberMe] = useState(false);
-  
+  const [token, setToken] = useState('')
+
   const LoginSchema = Yup.object().shape({
-    username: Yup.string().required('Username is required'),
-    password: Yup.string().required('Password is required'),
+    email: Yup.string().email().required('Email is required'),
+    password: Yup.string().min(8).required('Password is required'),
   });
   
-  const handleLogin = () => {};
-  
+  const handleLogin = async () => {
+    await axios.post(`${server}/api/auth/login`, values).then((response) => {
+      localStorage.setItem("token", response.data.access_token)
+      window.location.pathname = '/home'
+    }).catch((error: AxiosError) => {
+      if (error.response?.status == 422) {
+        toast.error("Input Error")
+      } else if (error.response?.status == 400) {
+        toast.warning("Incorrect Email or Password")
+      }
+      console.log(error)
+    })
+  };
+
   const {
     errors,
     touched,
@@ -30,7 +47,7 @@ export const LoginForm = () => {
     resetForm
   } = useFormik({
     initialValues: {
-      username: '',
+      email: '',
       password: ''
     },
     validationSchema: LoginSchema,
@@ -43,19 +60,18 @@ export const LoginForm = () => {
       <img className={'mx-auto sm:hidden block w-32'} src={'/images/logos/Logo-01.svg'} alt={'full-logo'} />
       <div className={'sm:px-[38px] px-6'}>
         <TextInput
-          name={'username'}
+          name={'email'}
           className={'flex-1 mt-[38px]'}
           label={
             <div className={'flex items-center mb-1'}>
               <img className={'w-6 h-6'} src={'/images/icons/user-icon.svg'} alt={'user icon'} />
-              <p className={'text-[18px] font-semibold text-[#C8C5C5]'}>Username</p>
+              <p className={'text-[18px] font-semibold text-[#C8C5C5]'}>Email</p>
             </div>
           }
           variant={TEXT_INPUT_VARIANT.CONTAINED}
-          value={values.username}
+          value={values.email}
           onChange={handleChange}
-          showError={touched.username && errors.username}
-          error={errors.username}
+          error={errors.email}
         />
         <TextInput
           name={'password'}
@@ -69,7 +85,6 @@ export const LoginForm = () => {
           variant={TEXT_INPUT_VARIANT.CONTAINED}
           value={values.password}
           onChange={handleChange}
-          showError={touched.password && errors.password}
           error={errors.password}
           type={'password'}
         />
@@ -78,9 +93,11 @@ export const LoginForm = () => {
           checked={rememberMe}
           onClick={() => setRememberMe(prev => !prev)} label={'Remember me'}
         />
-        <button className="w-full h-[49px] bg-[#00C5FF] rounded-[30px] text-[20px] font-bold text-white mt-5 mb-[19px]">Log In</button>
+        <ToastContainer />
+        <button className="w-full h-[49px] bg-[#00C5FF] rounded-[30px] text-[20px] font-bold text-white mt-5 mb-[19px]" onClick={handleLogin}>Log In</button>
         <a href={'#'} className={'text-[14px] font-semibold text-[#C8C5C5]'}>Lost your password?</a>
       </div>
     </div>
   );
 };
+

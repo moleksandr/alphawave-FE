@@ -1,5 +1,5 @@
-export const HOME = '/'
+export const LOGIN = '/login'
+export const HOME = '/home'
 export const TASKS = '/tasks'
 export const PROJECTS = '/projects'
-export const LOGIN = '/login'
-export const SIGN_UP = '/sign-up'
+export const SIGN_UP = '/register'

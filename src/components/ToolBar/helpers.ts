@@ -7,32 +7,32 @@ export const toolOptions: ToolOption[] = [
     label: 'Templates',
     type: TOOL_TYPE.TEMPLATES
   },
-  {
-    icon: '/images/icons/tool-section-icon.svg',
-    label: 'Add Section',
-    subTools: [
-      {
-        icon: '/images/icons/tool-section-one-icon.svg',
-        type: TOOL_TYPE.SECTION_ONE
-      },
-      {
-        icon: '/images/icons/tool-section-two-one-icon.svg',
-        type: TOOL_TYPE.SECTION_TWO_ONE
-      },
-      {
-        icon: '/images/icons/tool-section-three-icon.svg',
-        type: TOOL_TYPE.SECTION_THREE
-      },
-      {
-        icon: '/images/icons/tool-section-two-two-icon.svg',
-        type: TOOL_TYPE.SECTION_TWO_TWO
-      },
-      {
-        icon: '/images/icons/tool-section-two-three-icon.svg',
-        type: TOOL_TYPE.SECTION_TWO_THREE
-      }
-    ]
-  },
+  // {
+  //   icon: '/images/icons/tool-section-icon.svg',
+  //   label: 'Add Section',
+  //   subTools: [
+  //     {
+  //       icon: '/images/icons/tool-section-one-icon.svg',
+  //       type: TOOL_TYPE.SECTION_ONE
+  //     },
+  //     {
+  //       icon: '/images/icons/tool-section-two-one-icon.svg',
+  //       type: TOOL_TYPE.SECTION_TWO_ONE
+  //     },
+  //     {
+  //       icon: '/images/icons/tool-section-three-icon.svg',
+  //       type: TOOL_TYPE.SECTION_THREE
+  //     },
+  //     {
+  //       icon: '/images/icons/tool-section-two-two-icon.svg',
+  //       type: TOOL_TYPE.SECTION_TWO_TWO
+  //     },
+  //     {
+  //       icon: '/images/icons/tool-section-two-three-icon.svg',
+  //       type: TOOL_TYPE.SECTION_TWO_THREE
+  //     }
+  //   ]
+  // },
   {
     icon: '/images/icons/tool-text-icon.svg',
     label: 'Text',

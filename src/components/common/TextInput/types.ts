@@ -14,7 +14,6 @@ export type TextInputProps = {
   variant?: TEXT_INPUT_VARIANT;
   value?: string;
   onChange?: (e: any) => void;
-  showError?: any;
   error?: string | boolean;
   type?: string;
 }

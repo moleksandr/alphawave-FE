@@ -13,7 +13,6 @@ export const TextInput: FC<TextInputProps> = (props) => {
     onChange,
     variant = TEXT_INPUT_VARIANT.UNDERLINE,
     className,
-    showError,
     error,
     type = 'text',
   } = props;
@@ -30,7 +29,7 @@ export const TextInput: FC<TextInputProps> = (props) => {
         value={value}
         onChange={onChange}
       />
-      {showError && <p className={'text-[12px] text-[red] mt-1'}>{error}</p>}
+      {!!error && <p className={'text-[12px] text-[red] mt-1 fixed'}>{error}</p>}
     </div>
   );
 };

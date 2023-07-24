@@ -22,7 +22,7 @@ type Widget = {
 type Section = {
   id: string;
   title: string;
-  widgets: Widget[];
+  areas: Area[];
 }
 
 interface ProjectContextProps {
@@ -38,7 +38,7 @@ const initialValues = {
   sections: [{
     id: uuidv4(),
     title: 'New Section',
-    widgets: []
+    areas: []
   }],
   addSection: () => {},
   updateSection: () => {},
@@ -56,7 +56,7 @@ export const ProjectProvider: FC<any> = ({ children }) => {
     const newSection = {
       id: uuidv4(),
       title: 'New Section',
-      widgets: []
+      areas: []
     };
     
     setSections(prevSections => [...prevSections, newSection]);
@@ -147,7 +147,7 @@ export const ProjectProvider: FC<any> = ({ children }) => {
   const removeWidget = (sectionId: string, widgetI: string) => {
     setSections(prevSections => prevSections.map(section => section.id === sectionId ? ({
       ...section,
-      widgets: section.widgets.filter(widget => widget.i !== widgetI)
+      areas: section.areas.filter(area => area.id !== areaId)
     }) : section))
   };
   

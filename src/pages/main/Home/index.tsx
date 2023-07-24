@@ -83,16 +83,16 @@ const HomePage = () => {
                   [...links, ...links].map((link: any, index: number) => (
                     <div key={`link-${index}`} className='p-3 min-w-[325px]'>
                       <div className='rounded-xl p-2 bg-white shadow-md w-[1/2] md:w-[1/3] lg:w-[1/4] ' key={index}>
-                      <img src={link.img} alt="" width={300} height={200} className='rounded-2xl' />
+                      <img src={link?.img} alt="" width={300} height={200} className='rounded-2xl' />
                       <div className='border-b-border border-b-[1px]'>
-                        <p className='text-[22px] text-primary font-extrabold mt-2'>{link.title}
+                        <p className='text-[22px] text-primary font-extrabold mt-2'>{link?.title}
                         </p>
-                        <p className='text-secondary text-md font-bold pt-0 mb-5'>{link.note}</p>
+                        <p className='text-secondary text-md font-bold pt-0 mb-5'>{link?.note}</p>
                       </div>
-                      <p className='pt-3 text-lightBlue font-semibold text-lg font-spartan'>{link.spec}</p>
+                      <p className='pt-3 text-lightBlue font-semibold text-lg font-spartan'>{link?.spec}</p>
                       <div className='rounded-md bg-border p-2 flex items-center mt-2'>
-                        <img src={link.avatar} alt="" width={36} height={36} />
-                        <span className='ml-2 text-primary font-spartan text-lg font-medium'>{link.role}</span>
+                        <img src={link?.avatar} alt="" width={36} height={36} />
+                        <span className='ml-2 text-primary font-spartan text-lg font-medium'>{link?.role}</span>
                       </div>
                     </div>
                     </div>

@@ -11,7 +11,7 @@ import { useProjectContext } from '../../contexts/ProjectContext';
 // Export component
 export const ToolOption: FC<ToolOptionProps> = (props) => {
   const { icon, type, label } = props;
-  const { addComponent } = useProjectContext();
+  const { addWidget } = useProjectContext();
   
   const [{ isDragging }, drag] = useDrag(() => ({
     type: type || TOOL_TYPE.TEMPLATES,

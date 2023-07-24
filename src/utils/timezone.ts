@@ -31,6 +31,13 @@ export function formatDateTime(dateTime: Date) {
     return formatTime(dateTime) + ', ' + formatDate(dateTime)
 }
 
+export function formmatDateDMY(dateTime: Date) {
+    const day = dateTime.getDate().toString();
+    const month = (dateTime.getMonth() + 1).toString();
+    const year = dateTime.getFullYear().toString();
+    return `${day}/${month}/${year}`;
+}
+
 export function getCurrentTime(offset: number) {
     let d = new Date();
     let utc = d.getTime() + (d.getTimezoneOffset() * 60000);

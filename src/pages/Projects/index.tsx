@@ -1,14 +1,13 @@
 // Dependencies
-import React from 'react';
+import React, { useState } from 'react';
+
+// Components
+import { MainLayout } from '../../components/layouts/MainLayout';
+import { Section } from '../../components/Section';
+import {useProjectContext} from "../../contexts/ProjectContext";
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend  } from 'react-dnd-html5-backend';
-// Components
-
-import { MainLayout } from '../../../components/layouts/MainLayout';
-import { Section } from '../../../components/Section';
-import { ToolBar } from '../../../components/ToolBar';
-// Contexts
-import { useProjectContext } from '../../../contexts/ProjectContext';
+import { ToolBar } from '../../components/ToolBar';
 
 // Export page
 const ProjectsPage = () => {
@@ -16,10 +15,10 @@ const ProjectsPage = () => {
 
   return (
     <MainLayout>
-
       <DndProvider backend={HTML5Backend}>
+        
       <ToolBar />
-      {sections.map((section:any) => (
+      {sections.map(section => (
         <Section key={section.id} id={section.id} />
       ))}
       </DndProvider>

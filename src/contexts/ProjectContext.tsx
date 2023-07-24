@@ -78,10 +78,10 @@ export const ProjectProvider: FC<any> = ({ children }) => {
           x: 1,
           y: maxRow,
           w: 13,
-          h: 7,
+          h: 13,
           minW: 5,
-          minH: 5,
-          maxH: 10,
+          minH: 13,
+          maxH: 14,
           maxW: 300,
           isResizable: true,
           draggableHandle: '.drag-handle',
@@ -96,7 +96,8 @@ export const ProjectProvider: FC<any> = ({ children }) => {
             break;
           case TOOL_TYPE.CHART_LINE:
             newWidget.w = 100;
-            newWidget.h = 11;
+            // newWidget.h = 11;
+            // newWidget.maxH = 11
             newWidget.isResizable = false
             break;
           case TOOL_TYPE.TABLE_STANDARD:
@@ -116,7 +117,9 @@ export const ProjectProvider: FC<any> = ({ children }) => {
             newWidget.isResizable = false
             break
           case TOOL_TYPE.IMAGE_SINGLE:
-            newWidget.maxH = 40
+            newWidget.maxH = 20
+            newWidget.minH = 10
+            newWidget.h = 10
             break
           case TOOL_TYPE.VIDEO_YOUTUBE:
             newWidget.h = 20
@@ -124,9 +127,9 @@ export const ProjectProvider: FC<any> = ({ children }) => {
             newWidget.maxH = 25
             break
           case TOOL_TYPE.SMART_FILE_UPLOAD:
-            newWidget.h = 11
-            newWidget.minH = 11
-            newWidget.maxH = 11
+            newWidget.h = 12
+            newWidget.minH = 12
+            newWidget.maxH = 12
             newWidget.minW = 12
             newWidget.isResizable = false
             }

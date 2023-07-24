@@ -9,12 +9,13 @@ import { TOOL_TYPE } from "../ToolBar/types";
 import { useProjectContext } from "../../contexts/ProjectContext";
 import { StandardTable } from "../tools/tables/StandardTable";
 import YoutubeVideo from "../tools/video/YoutubeVideo";
+import {ChartPie} from "../tools/charts/ChartPie"
 // Styles
 import "./index.css";
 import ChartBar from "../tools/charts/ChartBar";
-import ChartLine from "../tools/charts/ChartLine";
+import {ChartLine} from "../tools/charts/ChartLine";
 import StatusTable from "../tools/tables/StatusTable";
-import SingleImage from "../tools/images/SingleImage";
+import {SingleImage} from "../tools/images/SingleImage";
 import { Files } from "../tools/files/Files";
 
 // Export component
@@ -54,7 +55,7 @@ export const Section: FC<SectionProps> = (props) => {
     setIsEditing(false);
   };
 
-  const handleKeyDown = (event: any) => {
+  const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === "Enter") {
       setIsEditing(false);
     }
@@ -132,12 +133,15 @@ export const Section: FC<SectionProps> = (props) => {
         return <ChartBar id={id} />;
       case TOOL_TYPE.CHART_LINE:
         return <ChartLine id={id} />;
+      case TOOL_TYPE.CHART_PIE:
+        return <ChartPie id={id}/>
       case TOOL_TYPE.IMAGE_SINGLE:
         return <SingleImage />;
       case TOOL_TYPE.VIDEO_YOUTUBE:
         return <YoutubeVideo />;
       case TOOL_TYPE.SMART_FILE_UPLOAD:
         return <Files />;
+
       default:
         return (
           <div className="flex items-center justify-center">
@@ -151,9 +155,12 @@ export const Section: FC<SectionProps> = (props) => {
   const generateLayoutItem = () => {
     return layout?.lg.map((item) => (
       <div key={item.i} className="bg-white rounded-2xl pb-8 pl-8 pr-8 pt-8">
+        <button className="absolute left-50 top-2 rotate-90 left-1/2 cursor-grab button-handle-drop">
+          <img className='w-[13px] h-[23px]' src='/images/icons/handle.svg' alt='' />
+        </button>
         {renderComponent(item.type, item.id)}
         <button
-          className="absolute right-1 top-1 rounded-full text-xl text-white bg-green-900 w-7 h-7"
+          className="absolute right-1 top-2 rounded-full text-xl text-white bg-green-900 w-[36px] h-[36px]"
           onClick={() => removeWidget(id, item.i)}
         >
           ×
@@ -229,6 +236,7 @@ export const Section: FC<SectionProps> = (props) => {
                 useCSSTransforms={mounted}
                 measureBeforeMount={false}
                 compactType={"vertical"}
+                draggableHandle=".button-handle-drop"
                 isBounded={false}
               >
                 {generateLayoutItem()}

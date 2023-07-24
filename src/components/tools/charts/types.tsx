@@ -5,3 +5,8 @@ export type ChartBarProps = {
 export type ChartLineProps = {
   id: string
 }
+
+
+export type ChartPieProps = {
+  id: string
+}

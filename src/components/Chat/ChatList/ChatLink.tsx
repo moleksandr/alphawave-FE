@@ -20,11 +20,11 @@ const ChatLink = (props: any) => {
     }
     
     useEffect(() => {
-      setTitle(props.title);
-    }, [props.title])
+      setTitle(props?.title);
+    }, [props?.title])
 
     return (
-        <div className={`cursor-pointer w-full flex items-center ${props.is_direct_chat ? 'py-[7px]' : 'py-[5px]'}`}>
+        <div className={`cursor-pointer w-full flex items-center ${props?.is_direct_chat ? 'py-[7px]' : 'py-[5px]'}`}>
             {editingTitle ? (
                 <input autoFocus value={title} onChange={e => setTitle(e.target.value)} onKeyDown={handleKeyDown} />
             ) : (

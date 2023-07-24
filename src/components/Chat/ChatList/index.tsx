@@ -27,14 +27,14 @@ const ChatList = (props: any) => {
         const chatList = props.chats ? Object.values(props.chats) : [];
         return chatList.map((chat: any, index) => {
             const isGroupChat = chat?.title?.startsWith(GROUP_CHAT_PREFIX);
-            if (!chat.is_direct_chat && !isGroupChat) {
+            if (!chat?.is_direct_chat && !isGroupChat) {
                 return (
                     <ChatLink
                         key={`chat-${index}`}
-                        title={chat.title + `(+${chat?.people?.length ?? 0})`}
+                        title={chat?.title}
                         bold={!hasReadLastMessage(chat)}
-                        onClick={() => setActiveChat(chat.id)}
-                        onUpdateTitle={(title: string) => onUpdateChannel(title, chat.id)}
+                        onClick={() => setActiveChat(chat?.id)}
+                        onUpdateTitle={(title: string) => onUpdateChannel(title, chat?.id)}
                         editable
                     />
                 );
@@ -48,14 +48,14 @@ const ChatList = (props: any) => {
         const chatList = props.chats ? Object.values(props.chats) : [];
         return chatList.map((chat: any, index) => {
             const isGroupChat = chat?.title?.startsWith(GROUP_CHAT_PREFIX);
-            if (!chat.is_direct_chat && isGroupChat) {
+            if (!chat?.is_direct_chat && isGroupChat) {
                 return (
                   <ChatLink
                     key={`chat-${index}`}
-                    title={chat.title.replace(GROUP_CHAT_PREFIX, '') + `(+${chat?.people?.length ?? 0})`}
+                    title={chat?.title?.replace(GROUP_CHAT_PREFIX, '') + `(+${chat?.people?.length ?? 0})`}
                     bold={!hasReadLastMessage(chat)}
-                    onClick={() => setActiveChat(chat.id)}
-                    onUpdateTitle={(title: string) => onUpdateChannel(GROUP_CHAT_PREFIX + title, chat.id)}
+                    onClick={() => setActiveChat(chat?.id)}
+                    onUpdateTitle={(title: string) => onUpdateChannel(GROUP_CHAT_PREFIX + title, chat?.id)}
                     editable
                   />
                 );
@@ -81,7 +81,7 @@ const ChatList = (props: any) => {
         const chatList = props.chats ? Object.values(props.chats) : [];
         return chatList.map((chat: any, index) => {
             const user = returnNotMe(chat);
-            if (chat.is_direct_chat) {
+            if (chat?.is_direct_chat) {
                 return (
                     <ChatLink
                         key={`chat-${index}`}

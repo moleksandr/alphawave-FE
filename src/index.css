@@ -118,15 +118,21 @@ code {
 }
 
 .ce-settings-column {
-  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
-  z-index: 100 !important;
   position: absolute !important;
   right: 0 !important;
   height: calc(100% - 41px);
   width: max-content !important;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  z-index: 999 !important;
 }
 
-.ce-settings-column .ce-settings {}
+.ce-settings-column .ce-settings {
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border-left: none !important;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
 
 .ce-chat-feed-column {
   flex: 1 !important;
@@ -147,7 +153,8 @@ code {
   align-items: center;
 }
 
-.ce-my-message-bubble {
+.ce_message {
+  background-color: rgb(241, 240, 240);
   display: inline-flex;
   min-height: 40px;
   padding: 10px 19px;
@@ -155,5 +162,18 @@ code {
   align-items: center;
   flex-shrink: 0;
   border-radius: 8px !important;
+}
+
+.ce-my-message-bubble {
   background: linear-gradient(139deg, #0E45B5 0.33%, #66D6F9 100%);
+}
+
+.overlay-bg {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  background: #0004;
+  z-index: 998;
 }

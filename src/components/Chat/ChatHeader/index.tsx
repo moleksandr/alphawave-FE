@@ -32,14 +32,11 @@ const NewChatHeader: FC<NewChatHeaderProps> = (props) => {
     })
 
     return (
-      <div className="w-full absolute top-0 bg-[#FFFFFF] z-10">
+      <div className="w-full absolute top-0 bg-[#FFFFFF] z-10 rounded-tl-[25px] rounded-tr-[25px]">
         <div className="flex items-center pt-[7px] ml-3 mr-6 pb-[10px] border-[#B9B9B9] border-b-[1px]">
           <Avatar avatarUrl={chat?.is_direct_chat ? avatarUrl : chat?.admin?.avatar} size={60} shadow />
           <p className="text-black text-3xl font-medium ml-[13px]">{chat?.is_direct_chat ? username : ((isGroupChat ? chat?.title?.replace(GROUP_CHAT_PREFIX, '') : chat?.title) ?? conn?.userName)}</p>
-          <button className="ml-auto">
-            <img className="w-[47px] h-[47px]" src={'/images/icons/user-group.svg'} alt={'user group icon'} />
-          </button>
-          <button className="ml-4" onClick={onClickSettings}>
+          <button className="ml-auto" onClick={onClickSettings}>
             <img className="w-[47px] h-[47px]" src={'/images/icons/settings-icon.svg'} alt={'settings icon'} />
           </button>
         </div>

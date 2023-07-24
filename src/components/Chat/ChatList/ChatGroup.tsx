@@ -27,7 +27,7 @@ const ChatGroup = (props: any) => {
                 </form>:
                 <span className="flex items-center justify-between">
                     <span className="text-white text-lg font-medium">
-                        {props.title}
+                        {props?.title}
                     </span>
                     <button onClick={() => setFormOpen(true)}>
                       <img className="w-6 h-6" src="/images/icons/plus-circle.svg" alt={'plus'} />

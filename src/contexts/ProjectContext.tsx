@@ -51,7 +51,6 @@ const ProjectContext = createContext<ProjectContextProps>(initialValues);
 // Export Component
 export const ProjectProvider: FC<any> = ({ children }) => {
   const [sections, setSections] = useState<Section[]>(initialValues.sections);
-
   const addSection = () => {
     const newSection = {
       id: uuidv4(),
@@ -174,7 +173,6 @@ export const ProjectProvider: FC<any> = ({ children }) => {
     addWidget,
     removeWidget,
     removeSection,
-
   }
 
   return (

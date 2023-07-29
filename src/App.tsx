@@ -9,7 +9,7 @@ import ProjectsPage from './pages/main/Projects';
 import LoginPage from './pages/auth/Login';
 import SignUpPage from './pages/auth/SignUp';
 import { currentUser } from './utils/currentuser';
-import { VerificationPage } from './pages/auth/Verification';
+
 import { VerificationDonePage } from './pages/main/VerificationDonePage/VerificationDonePage';
 // Routes
 import * as ROUTES from './constants/routes';
@@ -36,12 +36,12 @@ const App = () => {
       <div className="App h-screen overflow-x-hidden">
         <BrowserRouter>
           <Routes>
-            <Route path={ROUTES.HOME} element={isLoggedIn==true ? <HomePage /> : <Navigate to={ROUTES.HOME} />} />
+            <Route path={ROUTES.HOME} element={isLoggedIn==true ? <HomePage /> : <Navigate to={ROUTES.LOGIN} replace/>} />
             <Route path={ROUTES.LOGIN} element={<LoginPage />} />
-            <Route path={ROUTES.TASKS} element={isLoggedIn==true ? <TasksPage /> : <Navigate to={ROUTES.TASKS} />}/>
-            <Route path={ROUTES.PROJECTS} element={isLoggedIn==true ? <ProjectsPage /> : <Navigate to={ROUTES.PROJECTS} />} />
+            <Route path={ROUTES.TASKS} element={isLoggedIn==true ? <TasksPage /> : <Navigate to={ROUTES.LOGIN} replace/>}/>
+            <Route path={ROUTES.PROJECTS} element={isLoggedIn==true ? <ProjectsPage /> : <Navigate to={ROUTES.LOGIN} replace/>} />
             <Route path={ROUTES.SIGN_UP} element={<SignUpPage />} />
-            <Route path={ROUTES.VERIFICATION} element={<VerificationPage />} />
+         
             <Route path={ROUTES.VERIFICATION_DONE} element={<VerificationDonePage />} />
           </Routes>
         </BrowserRouter>

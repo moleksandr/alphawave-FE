@@ -2,50 +2,88 @@ import { FC, useEffect, useState } from "react";
 import 'react-data-grid/lib/styles.css';
 import './index.css'
 import DataGrid, { textEditor } from 'react-data-grid'
+
 const columns = [
-  { key: 'chrome', name: 'Chrome', renderEditCell: textEditor, color: 'red' },
+  { key: 'chrome', name: 'Chrome', renderEditCell: textEditor},
   { key: 'uc-browser', name: 'UC Browser', renderEditCell: textEditor },
   { key: 'oper', name: 'Opera', renderEditCell: textEditor },
-  { key: 'sogou explorer', name: 'Sogou Explorer', renderEditCell: textEditor },
-  { key: 'qq', name: 'QQ', renderEditCell: textEditor },
+  { key: 'sogou explorer', name: 'Sogou Explorer', renderEditCell: textEditor},
+  { key: 'qq', name: 'QQ', renderEditCell: textEditor},
   { key: 'safari', name: 'Safari', renderEditCell: textEditor },
   { key: 'internet-explorer', name: 'Internet Explorer', renderEditCell: textEditor },
   { key: 'edge', name: 'Edge', renderEditCell: textEditor },
 ];
 
-const rowsData = [
-  { id: 0, title: 'Example' },
-  { id: 1, title: 'Demo' },
-  { id: 2, title: 'Example' },
-  { id: 3, title: 'Demo' },
-  { id: 4, title: 'Example' },
-  { id: 5, title: 'Demo' },
-  { id: 6, title: 'Example' },
-  { id: 7, title: 'Demo' },
-  { id: 8, title: 'Example' },
-  { id: 9, title: 'Demo' },
-  { id: 10, title: 'Example' },
-  { id: 11, title: 'Demo' },
-  { id: 12, title: 'Example' },
-  { id: 13, title: 'Demo' },
-  { id: 14, title: 'Example' },
-  { id: 15, title: 'Demo' }
-];
+interface Row {
+  id: string;
+}
+
+function createFakeRowObjectData(index: number): Row {
+  return {
+    id: `id_${index}`,
+  };
+}
+
+function createRows(numberOfRows: number): Row[] {
+  const rows: Row[] = [];
+
+  for (let i = 0; i < numberOfRows; i++) {
+    rows[i] = createFakeRowObjectData(i);
+  }
+
+  return rows;
+}
+
+function isAtBottom({ currentTarget }: React.UIEvent<HTMLDivElement>): boolean {
+  return currentTarget.scrollTop + 10 >= currentTarget.scrollHeight - currentTarget.clientHeight;
+}
+
+function loadMoreRows(newRowsCount: number, length: number): Promise<Row[]> {
+  return new Promise((resolve) => {
+    const newRows: Row[] = [];
+
+    for (let i = 0; i < newRowsCount; i++) {
+      newRows[i] = createFakeRowObjectData(i + length);
+    }
+
+    setTimeout(() => resolve(newRows), 1000);
+  });
+
+
+}
+
+// const renderColumnsHeader = (columns: any) => (
+//   <div className="bg-red">
+//     {columns}
+//   </div>
+  
+// )
+
 export const WidgetEditingTable: FC = () => {
-  const [rows, setRows] = useState(rowsData)
-  useEffect(() => {
-    setRows(rowsData)
-  }, [])
+  const [rows, setRows] = useState(() => createRows(50));
+  const [isLoading, setIsLoading] = useState(false);
+
+  async function handleScroll(event: React.UIEvent<HTMLDivElement>) {
+    if (isLoading || !isAtBottom(event)) return;
+    setIsLoading(true);
+    const newRows = await loadMoreRows(50, rows.length);
+    setRows([...rows, ...newRows]);
+    setIsLoading(false);
+  }
+
   return (
-    <div className='rounded-2xl'>
-      <DataGrid columns={columns} rows={rows} className="fill-grid"
+    <div className='rounded-2xl overflow-scroll h-full'>
+      <DataGrid 
+        columns={columns}
+        rows={rows}
+        className="fill-grid overflow-auto"
+        onScroll={handleScroll}
         defaultColumnOptions={{
           sortable: true,
           resizable: false,
           maxWidth: 175,
           minWidth: 175
         }}
-
       />
     </div>
   )

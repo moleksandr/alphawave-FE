@@ -161,13 +161,13 @@ export const Section: FC<SectionProps> = (props) => {
 
   const generateLayoutItem = () => {
     return layout?.lg.map((item) => (
-      <div key={item.i} className="bg-white rounded-2xl pb-8 pl-8 pr-8 pt-8">
+      <div key={item.i} className="bg-white rounded-2xl pb-8 pl-8 pr-8 pt-10">
         <button className="absolute left-50 top-2 rotate-90 left-1/2 cursor-grab button-handle-drop">
           <img className='w-[13px] h-[23px]' src='/images/icons/handle.svg' alt='' />
         </button>
         {renderComponent(item.type, item.id)}
         <button
-          className="absolute right-1 top-2 rounded-full text-xl text-white bg-green-900 w-[36px] h-[36px]"
+          className="absolute right-1 top-1 rounded-full text-xl text-white bg-[#FF2D52] w-[30px] h-[30px]"
           onClick={() => removeWidget(id, item.id)}
         >
           ×

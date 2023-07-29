@@ -1,37 +1,38 @@
 // Dependencies
 import {useState, createContext, useContext, FC, Dispatch, SetStateAction} from 'react';
 
+
+
+
 // Types
-type VerficationPayload = {
-  email: string;
-  verificationCodeExpiresTime: number
+
+
+type User = {
+  firstName: string
+  lastName: string
+  jobTitle: string
+  email: string
+  varification: boolean
+  registeredTime: string
+  lastVisitTime: string
+  blocked: boolean
 }
 
 interface AuthContextProps {
-  verificationPayload: VerficationPayload | undefined;
-  addVerificationPayload: (email: string, verificationCodeExpiresTime: number) => void;
 }
 
 const initialValues = {
-  verificationPayload: {
-    email: "",
-    verificationCodeExpiresTime: 0
-  },
-  addVerificationPayload: () => {},
+
 }
 
 const AuthContext = createContext<AuthContextProps>(initialValues);
 
 export const AuthProvider: FC<any> = ({ children }) => {
-  const [verificationPayload, setVerificationPayload] = useState<VerficationPayload>()
 
-  const addVerificationPayload = (email: string, verificationCodeExpiresTime: number) => {
-    setVerificationPayload(
-      {email: email, verificationCodeExpiresTime: verificationCodeExpiresTime})
-  }
+
+
   const value = {
-    verificationPayload,
-    addVerificationPayload,
+
   }
 
   return (

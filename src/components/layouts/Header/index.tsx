@@ -1,6 +1,6 @@
 // Dependencies
 import React, {useEffect, useRef, useState} from 'react';
-
+import {Link} from 'react-router-dom'
 // Components
 import { Button } from '../../common/Button';
 import { SearchBox } from '../../SearchBox';
@@ -45,9 +45,9 @@ export const Header = (props: HeaderProps) => {
                         <div className="text-sm lg:flex-grow">
                             {
                                 navItems.map((item: any, index: number) => (
-                                    <a href={item.redirect} onClick={() => setShowMessageBox(false)} className={`block mt-4 lg:inline-block lg:mt-0 md:mr-10 text-lg ${currentPath === item.redirect ? 'text-transparent bg-clip-text bg-gradient-to-r from-[#FF45C9] to-[#A10674] font-bold': 'font-medium text-grey'}`} key={index}>
+                                    <Link to={item.redirect} onClick={() => setShowMessageBox(false)} className={`block mt-4 lg:inline-block lg:mt-0 md:mr-10 text-lg ${currentPath === item.redirect ? 'text-transparent bg-clip-text bg-gradient-to-r from-[#FF45C9] to-[#A10674] font-bold': 'font-medium text-grey'}`} key={index}>
                                        {item.label}
-                                    </a>
+                                    </Link>
                                 ))
                             }
                         </div>

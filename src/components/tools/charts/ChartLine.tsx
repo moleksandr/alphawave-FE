@@ -54,11 +54,11 @@ console.log(id)
   return (
     <div className='w-full h-full'>
 
-      {/* {!isEditing ? (
+      {!isEditing ? (
       <div >
-                <button className='absolute right-12 top-2 w-[42px] h-[42px] rounded-2xl cursor-pointer' onClick={() => setIsEditing(true)}>
+                <button className='absolute right-12 top-1 w-[36px] h-[36px] rounded-2xl cursor-pointer' onClick={() => setIsEditing(true)}>
           <img src="/images/icons/handle-menu-icon.svg" alt="" />
-        </button> */}
+        </button>
       <ToolsHeader title='Crude Steel Production Annual Growth' />
         <ChartComponent id={id}
           primaryXAxis={primaryxAxis}
@@ -80,11 +80,11 @@ console.log(id)
           </SeriesCollectionDirective>
         </ChartComponent>
  
-      {/* </div>
+      </div>
 
     ) : (
       <WidgetEditingTable />
-    )} */}
+    )}
 
     </div>
   )

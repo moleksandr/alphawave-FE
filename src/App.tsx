@@ -30,15 +30,16 @@ const App = () => {
   )
 
   useEffect(() => {
-    fetch()
+    // fetch()
   }, [])
-  if(isLoggedIn!=null) {
+  if(isLoggedIn==null) {
     return (
       <div className="App h-screen overflow-x-hidden">
         <BrowserRouter>
           <Routes>
             <Route path={ROUTES.HOME} element={isLoggedIn==true ? <HomePage /> : <Navigate to={ROUTES.LOGIN} replace/>} />
-            <Route path={ROUTES.Files} element={isLoggedIn==true ? <Files /> : <Navigate to={ROUTES.LOGIN} replace/>} />
+            {/* <Route path={ROUTES.Files} element={isLoggedIn==true ? <Files /> : <Navigate to={ROUTES.LOGIN} replace/>} /> */}
+            <Route path={ROUTES.Files} element={<Files />} />
             <Route path={ROUTES.LOGIN} element={<LoginPage />} />
             <Route path={ROUTES.TASKS} element={isLoggedIn==true ? <TasksPage /> : <Navigate to={ROUTES.LOGIN} replace/>}/>
             <Route path={ROUTES.PROJECTS} element={isLoggedIn==true ? <ProjectsPage /> : <Navigate to={ROUTES.LOGIN} replace/>} />

@@ -15,6 +15,7 @@ module.exports = {
     extend: {
       fontFamily: {
         primary: "Manrope",
+        inter: "Inter",
       },
       colors: {
         primary: "#01174F",
@@ -76,6 +77,9 @@ module.exports = {
         },
         ".card-shadow": {
           boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)"
+        },
+        ".card-shadow-hover": {
+          boxShadow: "0px 4px 8px 0px rgba(0, 0, 0, 0.4)"
         },
       });
     },

@@ -3,6 +3,7 @@ import React, {FC, KeyboardEventHandler, useEffect, useState} from "react";
 import classNames from "classnames";
 // Types
 import {FloatingButtonProps} from "./types";
+import {AIChatPopup} from "../AIChatPopup";
 
 // Export component
 export const FloatingButton: FC<FloatingButtonProps> = ({
@@ -11,9 +12,10 @@ export const FloatingButton: FC<FloatingButtonProps> = ({
   const [opened, setOpened] = useState(false);
   const [addingTask, setAddingTask] = useState(false);
   const [taskTitle, setTaskTitle] = useState('');
+  const [chatOpened, setChatOpened] = useState(false);
 
   const buttonClass = classNames(
-    'w-15 hover:drop-shadow-lg cursor-pointer transition-all',
+    'w-15 hover:drop-shadow-lg cursor-pointer transition-all duration-300',
     opened && 'rotate-[360deg]',
   );
 
@@ -78,6 +80,7 @@ export const FloatingButton: FC<FloatingButtonProps> = ({
   };
 
   const onShowChatBot = () => {
+    setChatOpened(true);
     setOpened(false);
   };
 
@@ -127,6 +130,8 @@ export const FloatingButton: FC<FloatingButtonProps> = ({
           </button>
         </div>
       )}
+
+      <AIChatPopup opened={chatOpened} onClose={() => setChatOpened(false)} />
     </div>
   );
 };

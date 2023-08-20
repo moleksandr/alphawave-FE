@@ -33,12 +33,18 @@ module.exports = {
         dark: "#323232", 
         brandGray: "#798488",  
         brandBlue: "#08B4EB",  
-        brandBlueDark: "#0945B8",  
+        brandBlueDark: "#0945B8",
+        gray: {
+          '5c': '#5C5C5C',
+          'f9': '#F9F9F9'
+        },
       },
       backgroundImage: {
         'home-back': "url('/images/general/home-back.png')",
         'g1': 'linear-gradient(102deg, #018EBC 0%, #7265A7 88.02%)',
-        'g2': 'linear-gradient(118deg, rgba(3,189,244,1) 0%, rgba(224,28,167,1) 100%)'
+        'g2': 'linear-gradient(118deg, rgba(3,189,244,1) 0%, rgba(224,28,167,1) 100%)',
+        'chat-popup-title': 'linear-gradient(178deg, #0232AC 21.7%, #67D6F9)',
+        'chat-speech': 'linear-gradient(168.19deg, #0E45B5 0.35%, #66D6F9 105.68%)'
       }
     },
     fontFamily: {

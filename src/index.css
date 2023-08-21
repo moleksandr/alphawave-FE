@@ -190,7 +190,7 @@ code {
 }
 @font-face {
   font-family: manrope;
-  src: url(./components/Assts/Manrope-SemiBold.ttf);
+  src: url(./components/Assets/Manrope-SemiBold.ttf);
 }
 .table-heaing th {
   padding-right: 133px;

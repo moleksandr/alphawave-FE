@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
-import { server } from '../utils/setting'
+import { server } from './setting'
 
-export async function currentUser(token:any) {
+export async function currentUser(token) {
  
   try{
     const response = await axios.get(`${server}/users/me`, {

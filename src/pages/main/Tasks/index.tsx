@@ -7,7 +7,6 @@ import { MainLayout } from '../../../components/layouts/MainLayout';
 
 // Contexts
 import { TASK, useTaskContext } from '../../../contexts/TaskContext';
-import {FloatingButton} from "../../../components/FloatingButton";
 
 
 // Export page
@@ -128,8 +127,6 @@ const TasksPage = () => {
                     )}
                 </div>
             </div>
-
-            <FloatingButton onAddTask={addTask} />
         </MainLayout>
     );
 }

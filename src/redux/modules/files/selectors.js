@@ -1,16 +1,5 @@
-import { get } from 'lodash'
+import { get } from "lodash";
 
-export const newsStateSelector = (state) =>
-  get(state, 'news')
-
-export const newsSortBySelector = (state) =>
-  get(state, 'news.sortBy', null)
-
-export const newsSearchValueSelector = (state) =>
-  get(state, 'news.searchValue', null)
-
-export const newsTagSelector = (state) =>
-  get(state, 'news.tag', null)
-
-export const filteredNewsSelector = (state) =>
-  get(state, 'news.filteredNews', null)
+export const filesSelector = (state) => {
+  get(state, "files.files", null);
+};

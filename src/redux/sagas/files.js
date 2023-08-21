@@ -4,9 +4,8 @@ import apiCall from "../api/apiCall";
 
 const doGetAllFiles = apiCall({
   type: CONSTANTS.GET_ALL_FILES,
-  isGhostApi: true,
-  method: "post",
-  path: "ghost/articles/search",
+  method: "get",
+  path: "files",
 });
 
 export default function* rootSaga() {

@@ -1,6 +1,6 @@
 import { handleActions } from "redux-actions";
 import * as CONSTANTS from "./constants";
-import { requestSuccess } from "../../api/request";
+import { requestSuccess, requestFail } from "../../api/request";
 
 const getInitialState = () => {
   return {
@@ -16,12 +16,15 @@ const getInitialState = () => {
 export default handleActions(
   {
     [requestSuccess(CONSTANTS.GET_ALL_FILES)]: (state, { payload }) => {
-      let { files } = state;
-      files = files.concat(payload.posts);
-
       return {
         ...state,
-        files,
+        payload,
+      };
+    },
+    [requestFail(CONSTANTS.GET_ALL_FILES)]: (state, { payload }) => {
+      return {
+        ...state,
+        payload,
       };
     },
   },

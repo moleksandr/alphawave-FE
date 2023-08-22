@@ -12,6 +12,7 @@ import { BUTTON_VARIANTS } from '../../../components/common/Button/types';
 
 // Export page
 const HomePage = () => {
+  console.log('-------')
   const links = [
     {
       img: "/images/general/image4.png",

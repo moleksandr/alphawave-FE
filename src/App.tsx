@@ -21,7 +21,7 @@ import * as ROUTES from "./constants/routes";
 const App = () => {
   const token = localStorage.getItem("token");
 
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
 
   const fetch = useCallback(async () => {
     const user = await currentUser(token);

@@ -1,5 +1,6 @@
 // Dependencies
 import React, {FC, KeyboardEventHandler, useEffect, useState} from "react";
+import {useLocation} from "react-router-dom";
 import classNames from "classnames";
 // Types
 import {FloatingButtonProps} from "./types";
@@ -9,10 +10,13 @@ import {AIChatPopup} from "../AIChatPopup";
 export const FloatingButton: FC<FloatingButtonProps> = ({
   onAddTask,
 }) => {
+  const location = useLocation();
   const [opened, setOpened] = useState(false);
   const [addingTask, setAddingTask] = useState(false);
   const [taskTitle, setTaskTitle] = useState('');
   const [chatOpened, setChatOpened] = useState(false);
+
+  const showEditPageAction = location.pathname.startsWith('/projects');
 
   const buttonClass = classNames(
     'w-15 hover:drop-shadow-lg cursor-pointer transition-all duration-300',
@@ -28,7 +32,8 @@ export const FloatingButton: FC<FloatingButtonProps> = ({
 
   const newTaskActionClass = classNames(
     actionClass,
-    'bottom-2 right-24 pl-0.5 pr-1.5',
+    'pl-0.5 pr-1.5',
+    showEditPageAction ? 'bottom-2 right-24' : 'bottom-5 right-[5.5rem]',
   );
 
   const editPageActionClass = classNames(
@@ -38,7 +43,8 @@ export const FloatingButton: FC<FloatingButtonProps> = ({
 
   const chatBotActionClass = classNames(
     actionClass,
-    'bottom-28 right-1 pl-1.5 pr-2',
+    'pl-1.5 pr-2',
+    showEditPageAction ? 'bottom-28 right-1' : 'bottom-[5.5rem] right-9',
   );
 
   const inputClass = classNames(
@@ -102,10 +108,12 @@ export const FloatingButton: FC<FloatingButtonProps> = ({
             New Task
           </div>
 
-          <div className={editPageActionClass} onClick={onEditPage}>
-            <img src="/images/icons/edit-fill-blue.svg" alt="" />
-            Edit Page
-          </div>
+          {showEditPageAction && (
+            <div className={editPageActionClass} onClick={onEditPage}>
+              <img src="/images/icons/edit-fill-blue.svg" alt="" />
+              Edit Page
+            </div>
+          )}
 
           <div className={chatBotActionClass} onClick={onShowChatBot}>
             <img src="/images/icons/chat-bot-blue.svg" alt="" />

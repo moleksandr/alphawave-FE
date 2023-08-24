@@ -31,7 +31,7 @@ const Sidebar = (props: SidebarProps) => {
       className="w-3/12 p-3"
       style={{ border: "1px solid #DBDBDB", width: "18.5%" }}
     >
-      <div className="dropdown mb-5" data-te-dropdown-ref>
+      <div className="mb-5" data-te-dropdown-ref>
         <button
           id="dropdownMenuButton1"
           data-te-dropdown-toggle-ref

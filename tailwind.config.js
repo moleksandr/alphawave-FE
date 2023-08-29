@@ -1,7 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    './src/**/*.{js,jsx,ts,tsx}',
+    "./src/**/*.{js,jsx,ts,tsx}",
+    "./node_modules/tw-elements/dist/js/**/*.js",
   ],
   theme: {
     screens: {
@@ -15,6 +16,7 @@ module.exports = {
     extend: {
       fontFamily: {
         primary: "Manrope",
+        inter: "Inter",
       },
       colors: {
         primary: "#01174F",
@@ -32,12 +34,18 @@ module.exports = {
         dark: "#323232", 
         brandGray: "#798488",  
         brandBlue: "#08B4EB",  
-        brandBlueDark: "#0945B8",  
+        brandBlueDark: "#0945B8",
+        gray: {
+          '5c': '#5C5C5C',
+          'f9': '#F9F9F9'
+        },
       },
       backgroundImage: {
         'home-back': "url('/images/general/home-back.png')",
         'g1': 'linear-gradient(102deg, #018EBC 0%, #7265A7 88.02%)',
-        'g2': 'linear-gradient(118deg, rgba(3,189,244,1) 0%, rgba(224,28,167,1) 100%)'
+        'g2': 'linear-gradient(118deg, rgba(3,189,244,1) 0%, rgba(224,28,167,1) 100%)',
+        'chat-popup-title': 'linear-gradient(178deg, #0232AC 21.7%, #67D6F9)',
+        'chat-speech': 'linear-gradient(168.19deg, #0E45B5 0.35%, #66D6F9 105.68%)'
       }
     },
     fontFamily: {
@@ -45,6 +53,7 @@ module.exports = {
     },
   },
   plugins: [
+    require("tw-elements/dist/plugin.cjs"),
     function ({ addComponents }) {
       addComponents({
         ".container": {
@@ -64,21 +73,22 @@ module.exports = {
           // },
           "@screen 2xl": {
             maxWidth: "1800px",
-          margin: '0 auto',
-
+            margin: "0 auto",
           },
         },
         ".button-primary-gradient": {
-          background: "linear-gradient(142deg, #02BCF3 31.68%, #DF1BA7 78.47%)"
+          background: "linear-gradient(142deg, #02BCF3 31.68%, #DF1BA7 78.47%)",
         },
         ".shadow-primary": {
-          boxShadow: "0px 4px 40px 0px rgba(0, 0, 0, 0.10)"
+          boxShadow: "0px 4px 40px 0px rgba(0, 0, 0, 0.10)",
         },
         ".card-shadow": {
-          boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)"
+          boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
+        },
+        ".card-shadow-hover": {
+          boxShadow: "0px 4px 8px 0px rgba(0, 0, 0, 0.4)"
         },
       });
     },
   ],
-}
-
+};

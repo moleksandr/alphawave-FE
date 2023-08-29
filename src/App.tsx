@@ -10,9 +10,9 @@ import LoginPage from './pages/auth/Login';
 import SignUpPage from './pages/auth/SignUp';
 import ChatDashboardPage from './pages/chat/Dashboard';
 
-import { VerificationDonePage } from './pages/main/VerificationDonePage/VerificationDonePage';
+import { VerificationDonePage } from "./pages/main/VerificationDonePage/VerificationDonePage";
 // Routes
-import * as ROUTES from './constants/routes';
+import * as ROUTES from "./constants/routes";
 
 // Export App
 const App = () => {

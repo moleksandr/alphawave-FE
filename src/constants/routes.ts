@@ -1,4 +1,5 @@
-export const LOGIN = "/login";
+export const LOGIN = '/'
+export const CHAT = '/chat'
 export const HOME = "/home";
 export const FILES = "/Files";
 export const TASKS = "/tasks";

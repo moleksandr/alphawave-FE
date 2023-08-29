@@ -27,16 +27,16 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <AuthProvider>
-      <AppProvider>
-    <TaskProvider>
-      <ChatProvider>
-        <ProjectProvider>
+    <AppProvider>
+      <TaskProvider>
+        <ChatProvider>
+          <ProjectProvider>
 
-          <App />
-        </ProjectProvider>
-      </ChatProvider>
-    </TaskProvider>
-  </AppProvider>
+            <App />
+          </ProjectProvider>
+        </ChatProvider>
+      </TaskProvider>
+    </AppProvider>
   </AuthProvider>
 
 );

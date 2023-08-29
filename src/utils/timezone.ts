@@ -38,11 +38,31 @@ export function formmatDateDMY(dateTime: Date) {
     return `${day}/${month}/${year}`;
 }
 
-export function getCurrentTime(offset: number) {
+export function getCurrentTime(offset: number) {    
     let d = new Date();
     let utc = d.getTime() + (d.getTimezoneOffset() * 60000);
     let nd = new Date(utc + (3600000*offset));
     const time = nd.toLocaleString().split(', ')[1]?.split(' ')[0]?.slice(0, -3)
     const half = nd.toLocaleString().split(', ')[1]?.split(' ')[1] // AM or PM
     return `${time} ${half}`
+}
+
+
+export function getCreatedTime(timestamp: number) {
+
+    const timestampMilliseconds = timestamp;
+    const timestampSeconds = timestampMilliseconds / 1000;
+
+const date = new Date(timestampSeconds * 1000);
+
+const year = date.getUTCFullYear();
+const month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
+const day = ('0' + date.getUTCDate()).slice(-2);
+const hours = ('0' + date.getUTCHours()).slice(-2);
+const minutes = ('0' + date.getUTCMinutes()).slice(-2);
+const seconds = ('0' + date.getUTCSeconds()).slice(-2);
+
+const formattedDateTime = `${hours}:${minutes}`;
+
+return formattedDateTime;
 }

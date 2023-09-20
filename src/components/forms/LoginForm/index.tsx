@@ -15,7 +15,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 // Export component
-export const LoginForm = () => {
+export const LoginForm = (props: any) => {
   const [rememberMe, setRememberMe] = useState(false);
   const [token, setToken] = useState('')
   const [isUserNotVerify, setIsUserNotVerify] = useState<boolean>(false)

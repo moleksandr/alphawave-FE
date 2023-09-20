@@ -1,4 +1,4 @@
-export function getDateTime(date: string, offset: number) {
+export function getDateTime(date, offset) {
     if (!date) return ''
 
     date = date.replace(' ', 'T')
@@ -18,27 +18,27 @@ export function getDateTime(date: string, offset: number) {
 
 const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }
 
-export function formatTime(dateTime: Date) {
+export function formatTime(dateTime) {
     let time = dateTime.toLocaleString('en-US') ?? '';
     return time.split(' ')[1].slice(0, -3) + ' ' + time.slice(-2);
 }
 
-export function formatDate(dateTime: Date) {
-    return dateTime.toLocaleString('en-US', options as any)
+export function formatDate(dateTime) {
+    return dateTime.toLocaleString('en-US', options)
 }
 
-export function formatDateTime(dateTime: Date) {
+export function formatDateTime(dateTime) {
     return formatTime(dateTime) + ', ' + formatDate(dateTime)
 }
 
-export function formmatDateDMY(dateTime: Date) {
+export function formmatDateDMY(dateTime) {
     const day = dateTime.getDate().toString();
     const month = (dateTime.getMonth() + 1).toString();
     const year = dateTime.getFullYear().toString();
     return `${day}/${month}/${year}`;
 }
 
-export function getCurrentTime(offset: number) {    
+export function getCurrentTime(offset) {    
     let d = new Date();
     let utc = d.getTime() + (d.getTimezoneOffset() * 60000);
     let nd = new Date(utc + (3600000*offset));
@@ -48,7 +48,7 @@ export function getCurrentTime(offset: number) {
 }
 
 
-export function getCreatedTime(timestamp: number) {
+export function getCreatedTime(timestamp) {
 
     const timestampMilliseconds = timestamp;
     const timestampSeconds = timestampMilliseconds / 1000;

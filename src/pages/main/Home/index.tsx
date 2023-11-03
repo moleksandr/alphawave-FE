@@ -1,18 +1,27 @@
 // Dependencies
-import React from 'react';
-
+import {useSelector, useDispatch} from 'react-redux'
 // Components
 import { Button } from '../../../components/common/Button';
 import { MainLayout } from '../../../components/layouts/MainLayout';
 import { Carousel } from '../../../components/common/Carousel';
-
 // Types
 import { BUTTON_VARIANTS } from '../../../components/common/Button/types';
-
+import { AuthState, fetchGetCurrentUser, fetchLogOut } from '../../../redux/slices/authSlice';
+import { RootState } from '../../../redux/store';
+import { formmatDateDMY } from '../../../utils/timezone';
+import { useEffect } from 'react';
 
 // Export page
 const HomePage = () => {
-  console.log('-------')
+  const {userInfo}: AuthState = useSelector((state: RootState) => state.auth)
+  const dispatch = useDispatch()
+
+
+  const handleLogOut = () => {
+    
+    dispatch(fetchLogOut())
+  }
+
   const links = [
     {
       img: "/images/general/image4.png",
@@ -54,10 +63,8 @@ const HomePage = () => {
         <div className="sm:bg-[url('../public/images/general/home-back.png')] sm:bg-contain bg-no-repeat sm:flex gap-8">
           <div className='sm:w-[310px] rounded-xl bg-white py-5 px-8 sm:mt-[114px] sm:ml-[33px] card-shadow'>
             <img src="/images/avatars/Erick.png" alt="" className='rounded-full mx-auto' width={190} height={190} />
-            <p className='font-spartan font-semibold text-2xl text-primary text-center my-2 '>Shishir UX UI</p>
-            <p className='text-secondary text-xl font-normal text-center my-2'>Senior Brake Engineer
-              Foundation Brakes,
-              Chassis Systems</p>
+            <p className='font-spartan font-semibold text-2xl text-primary text-center my-2 '>{userInfo?.firstName} {userInfo?.lastName}</p>
+            <p className='text-secondary text-xl font-normal text-center my-2'>{userInfo?.jobTitle}</p>
             <div className='pt-8 font-spartan'>
               <p className='text-secondary text-xl font-semibold text-center my-2'>Active Projects</p>
               <p className='text-primary text-[32px] font-bold text-center my-2'>10</p>
@@ -74,7 +81,14 @@ const HomePage = () => {
               type='submit'
               icon={<img src="/images/icons/ep_setting.svg" alt={'settings'} />}
             />
-            <p className='mt-4 text-sm font-semibold text-secondary text-center' >Member Since Mar 15,2023</p>
+            <Button
+              className={'button-primary-gradient text-white text-[16px] font-spartan mx-auto py-3 font-medium mt-3'}
+              variant={BUTTON_VARIANTS.CONTAINED}
+              label={'Log out'}
+              onClick={handleLogOut}
+              type='submit'
+            />
+            <p className='mt-4 text-sm font-semibold text-secondary text-center' >Member Since Mar {formmatDateDMY(userInfo?.registeredTime)}</p>
           </div>
           <div className='pt-10 sm:pt-0 mt-auto flex-1'>
             <p className='text-2xl text-primary font-bold mb-6'>Quick Links</p>

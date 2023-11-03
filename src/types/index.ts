@@ -15,3 +15,8 @@ export type IFolder = {
   name?: string;
   lastModifiedAt?: string;
 };
+
+export type IAiChatInput = {
+  role: string
+  content: string
+}

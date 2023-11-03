@@ -1,7 +1,8 @@
 // Dependencies
-import React from 'react';
+// import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { registerLicense } from '@syncfusion/ej2-base';
+import { Provider } from 'react-redux';
 // Styles
 import './index.css';
 
@@ -16,7 +17,7 @@ import { TaskProvider } from './contexts/TaskContext';
 import { AppProvider } from './contexts/AppContext';
 import { ChatProvider } from './contexts/ChatContext';
 import { ProjectProvider } from './contexts/ProjectContext';
-import { AuthProvider } from './contexts/AuthContext';
+import store from './redux/store';
 
 
 // Registering Syncfusion license key
@@ -26,22 +27,17 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <AuthProvider>
     <AppProvider>
       <TaskProvider>
         <ChatProvider>
           <ProjectProvider>
-
-            <App />
+            <Provider store={store}>
+              <App />
+            </Provider>
           </ProjectProvider>
         </ChatProvider>
       </TaskProvider>
     </AppProvider>
-  </AuthProvider>
-
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

@@ -1,21 +1,19 @@
 // Dependencies
-import React, { useState } from 'react';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import axios, { AxiosError } from 'axios';
-import { server } from '../../../utils/setting'
+import {useSelector, useDispatch} from 'react-redux'
+import { useNavigate } from 'react-router-dom';
 
-import {useAuthContext} from "../../../contexts/AuthContext"
 // Components
 import { TextInput } from '../../common/TextInput';
-import { toast, ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
+import { AuthState, fetchRegister, fetchResendVerification } from '../../../redux/slices/authSlice';
+import { RootState } from '../../../redux/store';
+
+// Styles
 import 'react-toastify/dist/ReactToastify.css';
 
-// I want to make a notification when I click the button  --- work? nope ok?
-// how to do this on script? 
-// Export component gimme a sec working now!!!!!
 export const SignUpForm = () => {
-  const [isRegisteredDone, setIsRegisterdeDone] = useState<boolean>(false)
   const SignUpSchema = Yup.object().shape({
     firstName: Yup.string().required('First name is required'),
     lastName: Yup.string().required('Last name is required'),
@@ -26,36 +24,24 @@ export const SignUpForm = () => {
   });
 
 
-  
-  const handleSignUp = async () => {
-    await axios.post(`${server}/users/sign-up`, values).then((response) => {
-      localStorage.setItem("email", values.email)
-      setIsRegisterdeDone(true)
-    }).catch((error: AxiosError) => {
-      if (error.response?.status === 409) {
-        toast.warning("Account already exist")
-      } else if (error.response?.status === 400) {
-        toast.error("Input Error")
-      } else if (error.response?.status === 500) {
-        toast.error("Internal server error")
-      }
-    })
+  const {success, isAuth}: AuthState = useSelector((state: RootState) => state.auth)
+
+  const dispatch = useDispatch()
+  const Navigate = useNavigate()
+
+  const handleSignUp = () => {
+    localStorage.setItem("email", values.email)
+    dispatch(fetchRegister({firstName: values.firstName, lastName: values.lastName, jobTitle: values.jobTitle, email: values.email, password: values.password}))
   };
+
+  if (isAuth) {
+    Navigate('/home')
+  }
 
   const handleNewVerificationLink = async () => {
     const email = localStorage.getItem("email")
-   
-    await axios.post(`${server}/users/resend-verification`, {email: email}).then((response) => {
-      toast.done("Sent check mail")
-    }).catch((error: AxiosError) => {
-      if (error.response?.status === 404) {
-        toast.warning("User not found")
-      } else if (error.response?.status === 400) {
-        toast.error("Input Error")
-      } else if (error.response?.status === 500) {
-        toast.error("Internal server error")
-      }
-    })
+   dispatch(fetchResendVerification({email}))
+
   }
   
   const {
@@ -81,7 +67,7 @@ export const SignUpForm = () => {
   return (
     <div className={'flex rounded-[25px] overflow-hidden'}>
       {
-        !isRegisteredDone ? (
+        !success ? (
           <div className={'flex rounded-[25px] overflow-hidden border-[5px] border-[#00C5FF] mx-4'}>
              <img className={'max-w-[546px] min-w-[450px] min-h-[750px] h-full object-cover md:block hidden'} src={'/images/general/sign-up-bg.png'} alt={'sign up bg'} />
           <div className="max-w-[680px] min-h-[750px] w-screen bg-white py-9">
@@ -148,7 +134,6 @@ export const SignUpForm = () => {
             </div>
           </div>
           </div>
-         
         ) : (
           <div className='flex rounded-[25px] overflow-hidden border-[5px] border-[#00C5FF] mx-4'>
             you need verify your account
@@ -156,7 +141,6 @@ export const SignUpForm = () => {
           </div>
         )
       }
-
   </div>
   );
 };

@@ -32,9 +32,10 @@ export function formatDateTime(dateTime) {
 }
 
 export function formmatDateDMY(dateTime) {
-    const day = dateTime.getDate().toString();
-    const month = (dateTime.getMonth() + 1).toString();
-    const year = dateTime.getFullYear().toString();
+    const date = new Date(dateTime)
+    const day = date.getDate().toString();
+    const month = (date.getMonth() + 1).toString();
+    const year = date.getFullYear().toString();
     return `${day}/${month}/${year}`;
 }
 

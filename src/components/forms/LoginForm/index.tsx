@@ -1,65 +1,48 @@
 // Dependencies
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import axios, { AxiosError } from 'axios';
-
+import {useSelector, useDispatch} from 'react-redux'
+import { useNavigate } from 'react-router-dom';
 // Components
 import { TextInput } from '../../common/TextInput';
 import { Checkbox } from '../../common/Checkbox';
-import { server } from '../../../utils/setting'
+import { API_URL } from '../../../utils/setting'
+
 // Types
 import { TEXT_INPUT_VARIANT } from '../../common/TextInput/types';
-
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { AuthState, fetchGetCurrentUser, fetchLogin, fetchResendVerification} from '../../../redux/slices/authSlice';
+import { RootState } from '../../../redux/store';
 
 // Export component
 export const LoginForm = (props: any) => {
   const [rememberMe, setRememberMe] = useState(false);
-  const [token, setToken] = useState('')
-  const [isUserNotVerify, setIsUserNotVerify] = useState<boolean>(false)
+
   const LoginSchema = Yup.object().shape({
     email: Yup.string().email().required('Email is required'),
     password: Yup.string().min(8).required('Password is required'),
   });
-  
-  const handleLogin = async () => {
-   
-    await axios.post(`${server}/users/sign-in`, values).then((response) => {
-      localStorage.setItem("token", response?.data?.accessToken)
-      localStorage.setItem("email", values.email)
-      window.location.pathname = '/home'
-    }).catch((error: AxiosError) => {
-      if (error.response?.status === 400) {
-        toast.error("Input Error")
-      } else if (error.response?.status == 401) {
-        setIsUserNotVerify(true)
-      } else if (error.response?.status === 404) {
-        toast.warning("user with such email and password doesn't exists")
-      } else if (error.response?.status === 400) {
-        toast.warning("Incorrect Email or Password")
-      } else if (error.response?.status === 500) {
-        toast.warning("Thre was an internal server bug, please try again later")
-      }
-   
-    })
+
+  const Navigate = useNavigate()
+
+  const {isAuth, isUserNotVerify}: AuthState = useSelector((state: RootState) => state.auth)
+  const dispatch = useDispatch()
+
+  const handleLogin =  (e: any) => {
+    e.preventDefault()
+   dispatch(fetchLogin({email: values.email, password: values.password}))
   };
 
-  const handleNewVerificationLink = async () => {
+  if (isAuth) {
+    Navigate('/home')
+  }
+
+  const handleNewVerificationLink =  () => {
     const email = localStorage.getItem("email")
-   
-    await axios.post(`${server}/users/resend-verification`, {email: email}).then((response) => {
-      toast.done("Sent check mail")
-    }).catch((error: AxiosError) => {
-      if (error.response?.status === 404) {
-        toast.warning("User not found")
-      } else if (error.response?.status === 400) {
-        toast.error("Input Error")
-      } else if (error.response?.status === 500) {
-        toast.error("Internal server error")
-      }
-    })
+    dispatch(fetchResendVerification({email}))
   }
 
   const {

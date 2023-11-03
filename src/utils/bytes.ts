@@ -1,4 +1,4 @@
-export default (bytes) => {
+export default (bytes: any) => {
   if (bytes < 1024) {
     return bytes + "B";
   } else if (bytes < 1024 * 1024) {

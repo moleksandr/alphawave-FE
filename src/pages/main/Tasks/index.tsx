@@ -1,23 +1,26 @@
 // Dependencies
 import React, { useEffect, useState } from 'react';
 import { Droppable, Draggable, DragDropContext, DropResult } from 'react-beautiful-dnd';
-
+import {useSelector, useDispatch} from 'react-redux'
 // Components
 import { MainLayout } from '../../../components/layouts/MainLayout';
 
 // Contexts
 import { TASK, useTaskContext } from '../../../contexts/TaskContext';
-
+import { TasksState, fetchClearAll, fetchCreateTask, fetchDeleteAll, fetchDeleteTask, fetchFinishedTask, fetchGetTasks } from '../../../redux/slices/tasksSlice';
+import { RootState } from '../../../redux/store';
+import { TASK_STATUS } from './types';
 
 // Export page
 const TasksPage = () => {
     const [newTaskTitle, setNewTaskTitle] = useState('');
-    const [tasks, setTasks] = useState<TASK[]>([]);
+    // const [tasks, setTasks] = useState<TASK[]>([]);
 
     const {
-        tasks: originTasks,
-        finishedTasks,
-        deletedTasks,
+        // tasks: originTasks,
+        // finishedTasks,
+        // deletedTasks,
+        getAllTask,
         addTask,
         deleteTask,
         completeTask,
@@ -27,22 +30,44 @@ const TasksPage = () => {
         clearAll,
     } = useTaskContext();
 
+    const {tasks, finishedTasks, deletedTasks}: TasksState = useSelector((state: RootState) => state.tasks)
+    const dispatch = useDispatch()
     const handleAddTask = () => {
-        addTask(newTaskTitle);
+        dispatch(fetchCreateTask({title: newTaskTitle, status: 'active', priority: 'high', order: 2}))
         setNewTaskTitle('');
     };
 
-    const handleDragEnd = (result: DropResult) => {
-      const array = Array.from(tasks);
-      const [removed] = array.splice(result.source.index, 1);
-      array.splice(result.destination?.index || 0, 0, removed);
+    const handleDeleteTask = (id: string) => {
+        dispatch(fetchDeleteTask({id}))
+    }
+    const handleFinishedTask = (id: string) => {
+        dispatch(fetchFinishedTask({id}))
+    }
 
-      setTasks(array);
-    };
+    const handleDeleteAll = () => {
+        dispatch(fetchDeleteAll())
+    }
+
+    const handleClearAll = () => {
+        dispatch(fetchClearAll())
+    }
 
     useEffect(() => {
-      setTasks(originTasks);
-    }, [originTasks])
+        dispatch(fetchGetTasks())
+    }, [])
+
+    const handleDragEnd = (result: DropResult) => {
+    //   const array = Array.from(tasks);
+    //   const [removed] = array.splice(result.source.index, 1);
+    //   array.splice(result.destination?.index || 0, 0, removed);
+
+    //   setTasks(array);
+    };
+
+    // useEffect(() => {
+    //   getAllTask()
+    //   setTasks(originTasks);
+    // }, [originTasks])
 
     return (
         <MainLayout>
@@ -68,10 +93,12 @@ const TasksPage = () => {
                         <Droppable droppableId="droppable">
                             {(provided, snapshot) => (
                                 <div {...provided.droppableProps} ref={provided.innerRef}>
-                                    {tasks.map((task, index) => (
+                                    {tasks?.map((task, index) => (
                                         <Draggable key={task.id} draggableId={task.id} index={index}>
+                                            
                                             {(provided, snapshot) => (
-                                                <div
+                                               
+                                                    <div
                                                     className='flex select-none items-center bg-[#FFFFFF75] card-shadow rounded-[12px] px-4 py-[14px] mb-4'
                                                     ref={provided.innerRef}
                                                     {...provided.draggableProps}
@@ -80,13 +107,14 @@ const TasksPage = () => {
                                                 >
                                                     <img className='w-[13px] h-[23px]' src='/images/icons/handle.svg' alt='' />
                                                     <p className='ml-[20px] text-[#01174F] font-[600] text-[22px] flex-1'>{task.title}</p>
-                                                    <button className='ml-3' onClick={() => completeTask(task.id)}>
+                                                    <button className='ml-3' onClick={() => {handleFinishedTask(task.id)}}>
                                                         <img className='w-[36px] h-[36px]' src='/images/icons/check_circle.svg' alt='' />
                                                     </button>
-                                                    <button className='ml-3' onClick={() => deleteTask(task.id)}>
+                                                    <button className='ml-3' onClick={() => {handleDeleteTask(task.id)}}>
                                                         <img className='w-[36px] h-[36px]' src='/images/icons/delete_circle.svg' alt='' />
                                                     </button>
                                                 </div>
+                                             
                                             )}
                                         </Draggable>
                                     ))}
@@ -98,16 +126,19 @@ const TasksPage = () => {
                 </div>
                 <div className='mb-12'>
                     <p className="font-bold font-[Manrope] text-[28px] text-[#01174F] mb-4">Finished Tasks</p>
-                    {finishedTasks.map((task, index) => (
-                        <div key={`finished-task-item-${index}`} className='mb-4 h-[58px] bg-[#FFFFFF75] card-shadow rounded-[12px] flex items-center px-4 py-[14px]'>
-                            <p className='text-[#C0C0C0] text-[22px] font-[600] flex-1'>{task.title}</p>
-                            <button className='bg-buttonPrimary rounded-full px-6 py-[6px] text-white ml-[10px]' onClick={() => undoCompletingTask(task.id)}>Undo</button>
-                        </div>
+                    {finishedTasks?.map((task, index) => (
+
+                     
+                            <div key={`finished-task-item-${index}`} className='mb-4 h-[58px] bg-[#FFFFFF75] card-shadow rounded-[12px] flex items-center px-4 py-[14px]'>
+                                <p className='text-[#C0C0C0] text-[22px] font-[600] flex-1'>{task.title}</p>
+                                <button className='bg-buttonPrimary rounded-full px-6 py-[6px] text-white ml-[10px]' onClick={() => undoCompletingTask(task.id)}>Undo</button>
+                            </div>
+                       
                     ))}
                     {!!finishedTasks.length && (
                         <button
                             className='border-[2px] border-[#E10000] bg-white card-shadow px-[21px] py-[14px] rounded-[12px] mt-6 text-[#E10000] text-[22px] font-[600]'
-                            onClick={clearAll}
+                            onClick={handleClearAll}
                         >Clear All</button>
                     )}
                 </div>
@@ -122,7 +153,7 @@ const TasksPage = () => {
                     {!!deletedTasks.length && (
                         <button
                             className='border-[2px] border-[#E10000] bg-white card-shadow px-[21px] py-[14px] rounded-[12px] mt-6 text-[#E10000] text-[22px] font-[600]'
-                            onClick={deleteAll}
+                            onClick={handleDeleteAll}
                         >Delete All</button>
                     )}
                 </div>

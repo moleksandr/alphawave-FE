@@ -1,5 +1,5 @@
 // Dependencies
-import React from "react";
+import {useDispatch} from 'react-redux'
 import { Header } from "../Header";
 
 // Types
@@ -15,14 +15,17 @@ import { useTaskContext } from "../../../contexts/TaskContext";
 // Components
 import { Chat } from "../../Chat";
 import { FloatingButton } from "../../FloatingButton";
+import { fetchCreateTask } from '../../../redux/slices/tasksSlice';
 
 // Export component
 export const MainLayout = (props: MainLayoutProps) => {
   const { children } = props;
   const { showMessageBox, headerHeight } = useAppContext();
 
-  const { addTask } = useTaskContext();
-
+  const dispatch = useDispatch()
+  const handleAddTask = (title: string) => {
+    dispatch(fetchCreateTask({title}))
+  }
   const navItems = [
     {
       label: "Home",
@@ -64,7 +67,7 @@ export const MainLayout = (props: MainLayoutProps) => {
         {showMessageBox ? <Chat /> : children}
       </div>
 
-      {!showMessageBox && <FloatingButton onAddTask={addTask} />}
+      {!showMessageBox && <FloatingButton onAddTask={handleAddTask} />}
     </div>
   );
 };
